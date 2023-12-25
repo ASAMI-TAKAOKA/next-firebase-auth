@@ -25,7 +25,7 @@ const PostListItem = ({ post }: Props) => {
       </div>
       <div className="md:flex-grow">
         <Link href={`/posts/${encodeURIComponent(post.id)}`} legacyBehavior>
-          <a className={`text-2xl font-medium text-gray-800 title-font mb-2 ${isHovered ? "text-blue-500 underline" : ""}`}>
+          <a className={`text-2xl font-medium text-gray-800 title-font mb-2 ${isHovered ? "underline" : ""}`}>
             {post.title}
           </a>
         </Link>

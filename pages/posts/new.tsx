@@ -9,7 +9,7 @@ export default function NewPostPage() {
   const { currentUser, loading } = useAuthContext();
   const router = useRouter();
 
-  // Listen for changes on loading and currentUser, redirect if not logged in
+  // loadingとcurrentUserの変更を監視し、ログインしていない場合はリダイレクトする
   useEffect(() => {
     if (!loading && !currentUser) {
       router.push("/login");
