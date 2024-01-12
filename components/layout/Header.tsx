@@ -31,7 +31,7 @@ const Header = () => {
         href="/"
         className="text-center sm:text-left hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:ring"
       >
-        <h1 className="text-4xl font-medium">Sample App</h1>
+        <h1 className="text-4xl font-medium">Mom and Baby Help</h1>
       </Link>
       <nav className="flex items-center justify-between">
         <div className="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
