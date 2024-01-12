@@ -96,7 +96,7 @@ export default function PostForm(props: Props) {
   return (
     <>
       <Head>
-        <title>{post?.title || "Firebase Auth Sample App"}</title>
+        <title>{post?.title || "Mom and Baby Help"}</title>
         <meta
           name="description"
           content={

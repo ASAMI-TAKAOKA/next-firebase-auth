@@ -13,15 +13,15 @@ export default function HomePage({ posts }: Props) {
   return (
     <>
       <Head>
-        <title>Firebase Auth Sample App</title>
+        <title>Mom and Baby Help</title>
         <meta
           name="description"
-          content="This is a sample app using firebase authenticate"
+          content="This is a app for mom and baby using firebase authenticate"
         />
       </Head>
       <section className="mx-auto py-10 px-8">
         <div className="px-40">
-          <h3 className="text-3xl font-medium text-center">All Posts</h3>
+          <h3 className="text-3xl font-medium text-center">投稿記事一覧</h3>
           <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
             <div className="divide-y-2 divide-gray-100">
               {posts?.map((post) => (
