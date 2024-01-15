@@ -4,6 +4,8 @@ import fetch from "node-fetch";
 
 import { PostData } from "types/types";
 import PostListItem from "components/posts/PostListItem";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 
 type Props = {
   posts: PostData[];
@@ -21,14 +23,27 @@ export default function HomePage({ posts }: Props) {
       </Head>
       <section className="mx-auto py-10 px-8">
         <div className="px-40">
-          <h3 className="text-3xl font-medium text-center">投稿記事一覧</h3>
-          <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
-            <div className="divide-y-2 divide-gray-100">
-              {posts?.map((post) => (
-                <PostListItem key={post.id} post={post} />
-              ))}
+        <Tabs>
+          <TabList>
+            <Tab>全ての投稿</Tab>
+            <Tab>家事</Tab>
+            <Tab>お金</Tab>
+            <Tab>離乳食</Tab>
+            <Tab>出産</Tab>
+            <Tab>授乳</Tab>
+            <Tab>ねんね</Tab>
+            <Tab disabled>グッズ</Tab>
+          </TabList>
+          <TabPanel>
+            <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
+              <div className="divide-y-2 divide-gray-100">
+                {posts?.map((post) => (
+                  <PostListItem key={post.id} post={post} />
+                ))}
+              </div>
             </div>
-          </div>
+          </TabPanel>
+        </Tabs>
         </div>
       </section>
     </>
