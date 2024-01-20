@@ -150,6 +150,34 @@ export default function PostForm(props: Props) {
                   "Body is required and should be less than 500 characters."}
               </div>
             </div>
+
+            <div className="p-2 w-full">
+              <div className="relative">
+                <label
+                  htmlFor="category"
+                  className="leading-7 text-sm text-gray-600"
+                >
+                  Category
+                </label>
+                <select
+                  {...register("category", { required: true })}
+                  defaultValue={post?.category}
+                  id="category"
+                  name="category"
+                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
+                >
+                  <option value="house_work">家事</option>
+                  <option value="money">お金</option>
+                  <option value="baby_food">離乳食</option>
+                  <option value="childbirth">出産</option>
+                  <option value="breastfeeding">授乳</option>
+                  <option value="sleeping">ねんね</option>
+                  <option value="goods">グッズ</option>
+                </select>
+                {errors.category &&
+                  "Category is required."}
+              </div>
+            </div>
             <div className="p-2 w-full">
               <button
                 type="submit"
