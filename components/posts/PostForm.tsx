@@ -50,12 +50,12 @@ export default function PostForm(props: Props) {
         config
       );
       if (response.status === 200) {
-        toast.success("Post was successfully created!");
+        toast.success("投稿に成功しました!");
         router.push("/");
         return response.data;
       }
     } catch (err) {
-      toast.error("Failure: something wrong happened!");
+      toast.error("投稿失敗: 何らかの問題が発生しました。");
       let message;
       if (axios.isAxiosError(err) && err.response) {
         console.error(err.response.data.message);
@@ -77,12 +77,12 @@ export default function PostForm(props: Props) {
       );
       console.log(response.data);
       if (response.status === 200) {
-        toast.success("Post is updated successfully!");
+        toast.success("記事の更新に成功しました!");
         router.push(`/posts/${id.toString()}`);
         return response.data;
       }
     } catch (err) {
-      toast.error("Failure: something wrong happened!");
+      toast.error("更新失敗: 何らかの問題が発生しました。");
       let message;
       if (axios.isAxiosError(err) && err.response) {
         console.error(err.response.data.message);
@@ -183,7 +183,7 @@ export default function PostForm(props: Props) {
                 type="submit"
                 className="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
               >
-                {isAddMode ? "Create Post" : "Update Post"}
+                {isAddMode ? "投稿する" : "更新する"}
               </button>
             </div>
           </form>

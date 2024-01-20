@@ -51,7 +51,7 @@ const Header = () => {
               className="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
               type="button"
             >
-              記事を投稿する
+              新規投稿する
             </Link>
           )}
           {currentUser ? (
