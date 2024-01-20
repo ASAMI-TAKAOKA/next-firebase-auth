@@ -31,7 +31,7 @@ const Header = () => {
         href="/"
         className="text-center sm:text-left hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:ring"
       >
-        <h1 className="text-4xl font-medium">Mom and Baby Help</h1>
+        <h1 className="text-4xl font-medium text-pink-400">Mom and Baby Help</h1>
       </Link>
       <nav className="flex items-center justify-between">
         <div className="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
@@ -48,7 +48,7 @@ const Header = () => {
           {currentUser && (
             <Link
               href="/posts/new"
-              className="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
+              className="block rounded-lg bg-pink-400 px-5 py-3 text-sm font-medium text-white transition hover:bg-pink-700 focus:outline-none focus:ring"
               type="button"
             >
               新規投稿する

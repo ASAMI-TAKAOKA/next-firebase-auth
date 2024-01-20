@@ -80,7 +80,7 @@ export default function PostDetailPage({ post }: Props) {
                 <Link
                   href={`/posts/${post.id}/edit`}
                   type="button"
-                  className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+                  className="inline-flex text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded text-lg"
                 >
                   Edit
                 </Link>
