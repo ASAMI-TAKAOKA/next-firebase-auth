@@ -28,7 +28,7 @@ export default function PostDetailPage({ post }: Props) {
   }, [currentUser]);
 
   const deletePost = async () => {
-    const result = confirm("Want to delete?");
+    const result = confirm("削除しますか？");
     if (result) {
       const token = await currentUser?.getIdToken();
 
