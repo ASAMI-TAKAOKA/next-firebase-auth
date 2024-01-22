@@ -22,7 +22,7 @@ const Header = () => {
 
   const logoutHandler = async () => {
     await logout();
-    toast.success("You are signed out");
+    toast.success("ログアウトしました。");
   };
 
   return (

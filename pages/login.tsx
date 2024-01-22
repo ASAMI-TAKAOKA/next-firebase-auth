@@ -21,10 +21,10 @@ export default function LoginPage() {
 
       try {
         const response = await axios.post("/auth", null, config);
-        toast.success("You are signed in successfully!");
+        toast.success("ログインに成功しました!");
         router.push("/");
       } catch (err) {
-        toast.error("Something wrong happened!");
+        toast.error("何らかの問題が発生しました。");
         let message;
         if (axios.isAxiosError(err) && err.response) {
           console.error(err.response.data.message);
