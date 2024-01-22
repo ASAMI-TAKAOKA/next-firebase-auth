@@ -1,4 +1,6 @@
-![スクリーンショット 2023-12-05 16 27 19](https://github.com/ASAMI-TAKAOKA/next-firebase-auth/assets/77926245/cd5230b0-4cb7-43c4-a9b5-b48fe6101529)
+
+https://github.com/ASAMI-TAKAOKA/next-firebase-auth/assets/77926245/4a49ff43-feda-4c13-b08a-29cee74251f7
+
 # URL
 https://mom-and-baby-help.com/
 
