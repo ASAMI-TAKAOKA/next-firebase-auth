@@ -11,7 +11,7 @@ type Props = {
 const Pagination = (props: Props) => {
 
   const { posts } = props;
-  const itemsPerPage = 6;
+  const itemsPerPage = 5;
 
   const [itemOffset, setItemOffset] = useState(0);
 
