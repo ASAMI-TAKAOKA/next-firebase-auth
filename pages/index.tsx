@@ -7,6 +7,7 @@ import PostList from "components/posts/PostList";
 import 'react-tabs/style/react-tabs.css';
 import { useState } from 'react';
 import ReactPaginate from 'react-paginate';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 type Props = {
   posts: PostData[];
