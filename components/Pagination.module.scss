@@ -2,7 +2,7 @@
 // styles.paginationというように書く
 .pagination ul{ 
   text-align: center;
-  @import "bootstrap"; // ← 適用されない。。。
+  // @import "bootstrap"; // ← 適用されない。。。
 }
 .pagination li { 
   display: inline;
