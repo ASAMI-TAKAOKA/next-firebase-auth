@@ -12,7 +12,7 @@ const PostListItem = ({ post }: Props) => {
 
   return (
     <div
-      className={`py-8 flex flex-wrap md:flex-nowrap ${
+      className={`bg-gray-50 py-8 my-6 px-8 flex flex-wrap md:flex-nowrap ${
         isHovered ? "cursor-pointer" : ""
       }`}
       onMouseOver={() => setIsHovered(true)}

@@ -3,6 +3,7 @@ import { PostData } from "types/types";
 import PostListItem from "components/posts/PostListItem";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import styles from 'components/Pagination.module.scss';
 
 type Props = {
   posts: PostData[];

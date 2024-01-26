@@ -1,8 +1,8 @@
 import PostList from "components/posts/PostList";
 import { useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { PostData } from "types/types";
+import styles from 'components/Pagination.module.scss';
 
 type Props = {
   posts: PostData[];
@@ -31,28 +31,37 @@ const Pagination = (props: Props) => {
   
 
   return (
-    <div className="px-40">
-        <PostList posts={posts} currentPosts={currentPosts}/>
-        <ReactPaginate
-          nextLabel="next >"
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={3}
-          marginPagesDisplayed={2}
-          pageCount={pageCount}
-          previousLabel="< previous"
-          pageClassName="page-item"
-          pageLinkClassName="page-link"
-          previousClassName="page-item"
-          previousLinkClassName="page-link"
-          nextClassName="page-item"
-          nextLinkClassName="page-link"
-          breakLabel="..."
-          breakClassName="page-item"
-          breakLinkClassName="page-link"
-          containerClassName="pagination"
-          activeClassName="active"
-        />
+    <>
+    <div>
+      <PostList
+        posts={posts}
+        currentPosts={currentPosts}
+      />
     </div>
+    {/* TODO: styles.paginationの@import "bootstrap";の部分が適用されない */}
+    {/* <div className={`${styles['pagination']} px-40`}> */}
+    <div className={styles.pagination}>
+      <ReactPaginate
+        nextLabel="next >"
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={3}
+        marginPagesDisplayed={2}
+        pageCount={pageCount}
+        previousLabel="< previous"
+        pageClassName="page-item"
+        pageLinkClassName="page-link"
+        previousClassName="page-item"
+        previousLinkClassName="page-link"
+        nextClassName="page-item"
+        nextLinkClassName="page-link"
+        breakLabel="..."
+        breakClassName="page-item"
+        breakLinkClassName="page-link"
+        containerClassName="pagination"
+        activeClassName="active"
+      />
+    </div>
+    </>
   );
 }
 export default Pagination;
