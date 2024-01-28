@@ -82,7 +82,7 @@ export default function PostDetailPage({ post }: Props) {
                   type="button"
                   className="inline-flex text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded text-lg"
                 >
-                  Edit
+                  編集
                 </Link>
               )}
               {isAuthor && (
@@ -90,7 +90,7 @@ export default function PostDetailPage({ post }: Props) {
                   onClick={deletePost}
                   className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg"
                 >
-                  Delete
+                  削除
                 </button>
               )}
             </div>
