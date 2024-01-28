@@ -2,7 +2,7 @@ import PostList from "components/posts/PostList";
 import { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 import { PostData } from "types/types";
-import styles from 'components/layout/Pagination.module.scss';
+// import styles from 'components/layout/Pagination.module.scss';
 
 type Props = {
   posts: PostData[];
@@ -43,7 +43,8 @@ const Pagination = (props: Props) => {
       />
     {/* TODO: styles.paginationの@import "bootstrap";の部分が適用されない */}
     {/* <div className={`${styles['pagination']} px-40`}> */}
-    <div className={styles.pagination}>
+    {/* <div className={styles.pagination}> */}
+    <div>
       <ReactPaginate
         pageCount={pageCount}
         onPageChange={handlePageClick}
