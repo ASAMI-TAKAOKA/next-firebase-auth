@@ -6,12 +6,11 @@ import 'react-tabs/style/react-tabs.css';
 import styles from 'components/Pagination.module.scss';
 
 type Props = {
-  posts: PostData[];
   currentPosts: PostData[];
 };
 
 const PostList = (props: Props) => {
-  const { posts, currentPosts } = props;
+  const { currentPosts } = props;
 
   return (
     <>
