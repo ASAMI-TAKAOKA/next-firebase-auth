@@ -37,7 +37,7 @@ const Pagination = (props: Props) => {
   
 
   return (
-    <>
+    <div>
       <PostList
         currentPosts={currentPosts}
       />
@@ -66,7 +66,7 @@ const Pagination = (props: Props) => {
         renderOnZeroPageCount={null}
       />
     </div>
-    </>
+    </div>
   );
 }
 export default Pagination;
