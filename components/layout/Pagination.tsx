@@ -1,5 +1,5 @@
 import PostList from "components/posts/PostList";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 import { PostData } from "types/types";
 import styles from 'components/layout/Pagination.module.scss';
@@ -10,17 +10,22 @@ type Props = {
 
 const Pagination = (props: Props) => {
   const { posts } = props;
-
+  const [pageCount, setPageCount] = useState(0);
   const itemsPerPage = 5; // 1ページに何個表示するのか
-
-  // itemOffsetは配列の0番目の要素
-  const [itemOffset, setItemOffset] = useState(0);
-
-  // endOffsetは配列の5番目の要素
-  const endOffset = itemOffset + itemsPerPage;
+  const [currentPosts, setCurrentPosts] = useState(posts);
+  const [itemOffset, setItemOffset] = useState(0); // itemOffsetは配列の0番目の要素
+  const endOffset = itemOffset + itemsPerPage; // endOffsetは配列の5番目の要素
   console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-  const currentPosts = posts.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(posts.length / itemsPerPage);
+
+  useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage;
+    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+    setCurrentPosts(posts.slice(itemOffset, endOffset));
+    // postsが存在する場合に計算を行う
+    if (posts.length > 0) {
+      setPageCount(Math.ceil(posts.length / itemsPerPage));
+    }
+  }, [itemOffset, itemsPerPage, posts]);
 
   const handlePageClick = (e: { selected: number }) => {
     const newOffset = (e.selected * itemsPerPage) % posts.length;
