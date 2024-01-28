@@ -9,14 +9,16 @@ type Props = {
 };
 
 const Pagination = (props: Props) => {
-
   const { posts } = props;
-  const itemsPerPage = 5;
 
+  const itemsPerPage = 5; // 1ページに何個表示するのか
+
+  // itemOffsetは配列の0番目の要素
   const [itemOffset, setItemOffset] = useState(0);
 
+  // endOffsetは配列の5番目の要素
   const endOffset = itemOffset + itemsPerPage;
-  // console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+
   const currentPosts = posts.slice(itemOffset, endOffset);
 
   const pageCount = Math.ceil(posts.length / itemsPerPage);
