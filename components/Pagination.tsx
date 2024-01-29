@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import React from 'react';
 import ReactPaginate from 'react-paginate';
 import { PostData } from "types/types";
-import styles from 'components/layout/Pagination.module.scss';
+import styles from 'components/Pagination.module.scss';
 import PostList from "components/posts/PostList";
 
 type Props = {

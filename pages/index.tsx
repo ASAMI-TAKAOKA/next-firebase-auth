@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import fetch from "node-fetch";
 import { PostData } from "types/types";
 import 'react-tabs/style/react-tabs.css';
-import Pagination from "components/layout/Pagination";
+import Pagination from "components/Pagination";
 
 type Props = {
   posts: PostData[];
