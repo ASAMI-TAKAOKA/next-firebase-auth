@@ -29,8 +29,6 @@ const Pagination = (props: Props) => {
 
   return (
     <section>
-      {/* TODO: styles.paginationの@import "bootstrap";の部分が適用されない */}
-      {/* <div className={`${styles['pagination']} px-40`}> */}
       <div>
         <PostList currentPosts={currentPosts} />
       </div>
