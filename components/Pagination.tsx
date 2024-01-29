@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import React from 'react';
-import ReactPaginate from 'react-paginate';
+// import ReactPaginate from 'react-paginate';
 import { PostData } from "types/types";
 import styles from 'components/Pagination.module.scss';
 import PostList from "components/posts/PostList";
@@ -32,9 +32,9 @@ const Pagination = (props: Props) => {
       {/* TODO: styles.paginationの@import "bootstrap";の部分が適用されない */}
       {/* <div className={`${styles['pagination']} px-40`}> */}
       <div>
-        <PostList currentPosts={currentPosts} />
+        <PostList posts={posts} />
       </div>
-      <div className={styles.pagination}>
+      {/* <div className={styles.pagination}>
         <ReactPaginate
           pageCount={pageCount}
           onPageChange={handlePageClick}
@@ -56,7 +56,7 @@ const Pagination = (props: Props) => {
           breakLinkClassName='page-link' // 「…」の中のリンクにつけるクラス
           renderOnZeroPageCount={null}
         />
-      </div>
+      </div> */}
     </section>
   );
 }
