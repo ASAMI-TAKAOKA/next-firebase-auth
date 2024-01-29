@@ -8,11 +8,11 @@ import 'react-tabs/style/react-tabs.css';
 // import styles from 'components/Pagination.module.scss';
 
 type Props = {
-  currentPosts: PostData[];
+  posts: PostData[];
 };
 
 const PostList = (props: Props) => {
-  const { currentPosts } = props;
+  const { posts } = props;
 
   return (
     <>
@@ -33,7 +33,7 @@ const PostList = (props: Props) => {
           <TabPanel>
             <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
               <div className="divide-y-2 divide-gray-100">
-                {currentPosts?.map((post) => (
+                {posts?.map((post) => (
                   <PostListItem key={post.id} post={post} />
                 ))}
               </div>
@@ -43,7 +43,7 @@ const PostList = (props: Props) => {
             <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
               <div className="divide-y-2 divide-gray-100">
                 {/* カテゴリに合った記事だけを表示 */}
-                {currentPosts?.filter(post => post.category === "house_work").map((post) => (
+                {posts?.filter(post => post.category === "house_work").map((post) => (
                   <PostListItem key={post.id} post={post} />
                 ))}
               </div>
@@ -53,7 +53,7 @@ const PostList = (props: Props) => {
             <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
               <div className="divide-y-2 divide-gray-100">
                 {/* カテゴリに合った記事だけを表示 */}
-                {currentPosts?.filter(post => post.category === "money").map((post) => (
+                {posts?.filter(post => post.category === "money").map((post) => (
                   <PostListItem key={post.id} post={post} />
                 ))}
               </div>
@@ -63,7 +63,7 @@ const PostList = (props: Props) => {
             <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
               <div className="divide-y-2 divide-gray-100">
                 {/* カテゴリに合った記事だけを表示 */}
-                {currentPosts?.filter(post => post.category === "baby_food").map((post) => (
+                {posts?.filter(post => post.category === "baby_food").map((post) => (
                   <PostListItem key={post.id} post={post} />
                 ))}
               </div>
@@ -73,7 +73,7 @@ const PostList = (props: Props) => {
             <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
               <div className="divide-y-2 divide-gray-100">
                 {/* カテゴリに合った記事だけを表示 */}
-                {currentPosts?.filter(post => post.category === "childbirth").map((post) => (
+                {posts?.filter(post => post.category === "childbirth").map((post) => (
                   <PostListItem key={post.id} post={post} />
                 ))}
               </div>
@@ -83,7 +83,7 @@ const PostList = (props: Props) => {
             <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
               <div className="divide-y-2 divide-gray-100">
                 {/* カテゴリに合った記事だけを表示 */}
-                {currentPosts?.filter(post => post.category === "breastfeeding").map((post) => (
+                {posts?.filter(post => post.category === "breastfeeding").map((post) => (
                   <PostListItem key={post.id} post={post} />
                 ))}
               </div>
@@ -93,7 +93,7 @@ const PostList = (props: Props) => {
             <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
               <div className="divide-y-2 divide-gray-100">
                 {/* カテゴリに合った記事だけを表示 */}
-                {currentPosts?.filter(post => post.category === "sleeping").map((post) => (
+                {posts?.filter(post => post.category === "sleeping").map((post) => (
                   <PostListItem key={post.id} post={post} />
                 ))}
               </div>
@@ -103,7 +103,7 @@ const PostList = (props: Props) => {
             <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
               <div className="divide-y-2 divide-gray-100">
                 {/* カテゴリに合った記事だけを表示 */}
-                {currentPosts?.filter(post => post.category === "goods").map((post) => (
+                {posts?.filter(post => post.category === "goods").map((post) => (
                   <PostListItem key={post.id} post={post} />
                 ))}
               </div>
