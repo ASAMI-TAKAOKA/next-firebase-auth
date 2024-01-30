@@ -2,7 +2,6 @@ import type { AppProps } from "next/app";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 
-
 import "../styles/globals.css";
 import Layout from "components/layout/Layout";
 import { AuthContextProvider } from "context/AuthContext";

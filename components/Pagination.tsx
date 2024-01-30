@@ -4,8 +4,6 @@ import ReactPaginate from 'react-paginate';
 import { PostData } from "types/types";
 import styles from 'components/Pagination.module.scss';
 import PostList from "components/posts/PostList";
-import 'bootstrap/dist/css/bootstrap.min.css'; // BootstrapのCSSをインポート
-import Button from 'react-bootstrap/Button'; // React BootstrapのButtonコンポーネントをインポート
 
 type Props = {
   posts: PostData[];
@@ -36,23 +34,12 @@ const Pagination = (props: Props) => {
       </div>
       <div className={styles.pagination}>
         <ReactPaginate
-          nextLabel="next >"
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={3}
-          marginPagesDisplayed={2}
           pageCount={pageCount}
-          previousLabel="< previous"
-          pageClassName="page-item"
-          pageLinkClassName="page-link"
-          previousClassName="page-item"
-          previousLinkClassName="page-link"
-          nextClassName="page-item"
-          nextLinkClassName="page-link"
+          onPageChange={handlePageClick}
           breakLabel="..."
-          breakClassName="page-item"
-          breakLinkClassName="page-link"
-          containerClassName="pagination"
-          activeClassName="active"
+          nextLabel="next >"
+          pageRangeDisplayed={5}
+          previousLabel="< previous"
           renderOnZeroPageCount={null}
         />
       </div>
