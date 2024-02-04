@@ -6,33 +6,13 @@ import fetch from "node-fetch";
 import { PostData } from "types/types";
 import 'react-tabs/style/react-tabs.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { useState } from 'react';
 import PostListItem from "components/posts/PostListItem";
 
 type Props = {
   posts: PostData[];
 };
 
-const SHOW_COUNT = 3;
-
 export default function HomePage({ posts }: Props) {
-  const [offset, setOffset] = useState(1);
-  const [results, setResults] = useState(posts);
-
-  const nextPage = () => {
-    const necessaryButtonCount = Math.ceil(results.length / SHOW_COUNT);
-    if (necessaryButtonCount === offset) return;
-    setOffset((prevState) => prevState + 1);
-  };
-
-  const prevPage = () => {
-    if (offset === 1) return;
-    setOffset((prevState) => prevState - 1);
-  };
-
-  const changeOffset = (num: number) => {
-    setOffset(num);
-  };
 
   return (
     <>
@@ -60,8 +40,8 @@ export default function HomePage({ posts }: Props) {
           <TabPanel>
             <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
               <div className="divide-y-2 divide-gray-100">
-              {getShowData(results, offset, SHOW_COUNT)?.map((result) => (
-                  <PostListItem key={result.id} post={result} />
+              {posts?.map((post) => (
+                  <PostListItem key={post.id} post={post} />
                 ))}
               </div>
             </div>
@@ -70,8 +50,8 @@ export default function HomePage({ posts }: Props) {
             <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
               <div className="divide-y-2 divide-gray-100">
                 {/* カテゴリに合った記事だけを表示 */}
-                {getShowData(results, offset, SHOW_COUNT)?.filter(result => result.category === "house_work").map((result) => (
-                  <PostListItem key={result.id} post={result} />
+                {posts?.filter(post => post.category === "house_work").map((post) => (
+                  <PostListItem key={post.id} post={post} />
                 ))}
               </div>
             </div>
@@ -80,8 +60,8 @@ export default function HomePage({ posts }: Props) {
             <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
               <div className="divide-y-2 divide-gray-100">
                 {/* カテゴリに合った記事だけを表示 */}
-                {getShowData(results, offset, SHOW_COUNT)?.filter(result => result.category === "house_work").map((result) => (
-                  <PostListItem key={result.id} post={result} />
+                {posts?.filter(post => post.category === "money").map((post) => (
+                  <PostListItem key={post.id} post={post} />
                 ))}
               </div>
             </div>
@@ -90,8 +70,8 @@ export default function HomePage({ posts }: Props) {
             <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
               <div className="divide-y-2 divide-gray-100">
                 {/* カテゴリに合った記事だけを表示 */}
-                {getShowData(results, offset, SHOW_COUNT)?.filter(result => result.category === "house_work").map((result) => (
-                  <PostListItem key={result.id} post={result} />
+                {posts?.filter(post => post.category === "baby_food").map((post) => (
+                  <PostListItem key={post.id} post={post} />
                 ))}
               </div>
             </div>
@@ -100,8 +80,8 @@ export default function HomePage({ posts }: Props) {
             <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
               <div className="divide-y-2 divide-gray-100">
                 {/* カテゴリに合った記事だけを表示 */}
-                {getShowData(results, offset, SHOW_COUNT)?.filter(result => result.category === "house_work").map((result) => (
-                  <PostListItem key={result.id} post={result} />
+                {posts?.filter(post => post.category === "childbirth").map((post) => (
+                  <PostListItem key={post.id} post={post} />
                 ))}
               </div>
             </div>
@@ -110,8 +90,8 @@ export default function HomePage({ posts }: Props) {
             <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
               <div className="divide-y-2 divide-gray-100">
                 {/* カテゴリに合った記事だけを表示 */}
-                {getShowData(results, offset, SHOW_COUNT)?.filter(result => result.category === "house_work").map((result) => (
-                  <PostListItem key={result.id} post={result} />
+                {posts?.filter(post => post.category === "breastfeeding").map((post) => (
+                  <PostListItem key={post.id} post={post} />
                 ))}
               </div>
             </div>
@@ -120,8 +100,8 @@ export default function HomePage({ posts }: Props) {
             <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
               <div className="divide-y-2 divide-gray-100">
                 {/* カテゴリに合った記事だけを表示 */}
-                {getShowData(results, offset, SHOW_COUNT)?.filter(result => result.category === "house_work").map((result) => (
-                  <PostListItem key={result.id} post={result} />
+                {posts?.filter(post => post.category === "sleeping").map((post) => (
+                  <PostListItem key={post.id} post={post} />
                 ))}
               </div>
             </div>
@@ -130,37 +110,13 @@ export default function HomePage({ posts }: Props) {
             <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
               <div className="divide-y-2 divide-gray-100">
                 {/* カテゴリに合った記事だけを表示 */}
-                {getShowData(results, offset, SHOW_COUNT)?.filter(result => result.category === "house_work").map((result) => (
-                  <PostListItem key={result.id} post={result} />
+                {posts?.filter(post => post.category === "goods").map((post) => (
+                  <PostListItem key={post.id} post={post} />
                 ))}
               </div>
             </div>
           </TabPanel>
         </Tabs>
-        <div className="flex">
-          <button
-            className="border border-solid border-[#333]"
-            onClick={prevPage}
-          >
-            前へ
-          </button>
-          {getButtonCount(results, SHOW_COUNT).map((count) => (
-            <button
-              key={count}
-              className="rounded-full border border-solid border-black
-            w-5 h-5 ml-1 flex justify-center items-center"
-              onClick={() => changeOffset(count)}
-            >
-              {count}
-            </button>
-          ))}
-          <button
-            className="border border-solid border-[#333] ml-3"
-            onClick={nextPage}
-          >
-            次へ
-          </button>
-        </div>
         </div>
       </section>
     </>
@@ -181,19 +137,3 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 
   return { props: { posts } };
 };
-
-function getShowData<T>(results: T[], offset: number, showCount: number): T[] {
-  const firstArg = (offset - 1) * showCount;
-  const secondArg = offset * showCount;
-  return results.slice(firstArg, secondArg);
-}
-
-function getButtonCount<T>(results: T[], showCount: number): number[] {
-  const necessaryButtonCount = Math.ceil(results.length / showCount);
-  
-  let resultCount = [];
-  for (let i = 0; i < necessaryButtonCount; i++) {
-    resultCount.push(i + 1);
-  }
-  return resultCount;
-}
