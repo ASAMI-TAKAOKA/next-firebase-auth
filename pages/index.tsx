@@ -38,83 +38,45 @@ export default function HomePage({ posts }: Props) {
           </TabList>
 
           <TabPanel>
-            <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
-              <div className="divide-y-2 divide-gray-100">
-              {posts?.map((post) => (
-                  <PostListItem key={post.id} post={post} />
-                ))}
-              </div>
-            </div>
+            {posts?.map((post) => (
+              <PostListItem key={post.id} post={post} />
+            ))}
+          </TabPanel>
+          {/* カテゴリに合った記事だけを表示 */}
+          <TabPanel>
+            {posts?.filter(post => post.category === "house_work").map((post) => (
+              <PostListItem key={post.id} post={post} />
+            ))}
           </TabPanel>
           <TabPanel>
-            <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
-              <div className="divide-y-2 divide-gray-100">
-                {/* カテゴリに合った記事だけを表示 */}
-                {posts?.filter(post => post.category === "house_work").map((post) => (
-                  <PostListItem key={post.id} post={post} />
-                ))}
-              </div>
-            </div>
+            {posts?.filter(post => post.category === "money").map((post) => (
+              <PostListItem key={post.id} post={post} />
+            ))}
           </TabPanel>
           <TabPanel>
-            <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
-              <div className="divide-y-2 divide-gray-100">
-                {/* カテゴリに合った記事だけを表示 */}
-                {posts?.filter(post => post.category === "money").map((post) => (
-                  <PostListItem key={post.id} post={post} />
-                ))}
-              </div>
-            </div>
+            {posts?.filter(post => post.category === "baby_food").map((post) => (
+              <PostListItem key={post.id} post={post} />
+            ))}
           </TabPanel>
           <TabPanel>
-            <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
-              <div className="divide-y-2 divide-gray-100">
-                {/* カテゴリに合った記事だけを表示 */}
-                {posts?.filter(post => post.category === "baby_food").map((post) => (
-                  <PostListItem key={post.id} post={post} />
-                ))}
-              </div>
-            </div>
+            {posts?.filter(post => post.category === "childbirth").map((post) => (
+              <PostListItem key={post.id} post={post} />
+            ))}
           </TabPanel>
           <TabPanel>
-            <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
-              <div className="divide-y-2 divide-gray-100">
-                {/* カテゴリに合った記事だけを表示 */}
-                {posts?.filter(post => post.category === "childbirth").map((post) => (
-                  <PostListItem key={post.id} post={post} />
-                ))}
-              </div>
-            </div>
+            {posts?.filter(post => post.category === "breastfeeding").map((post) => (
+              <PostListItem key={post.id} post={post} />
+            ))}
           </TabPanel>
           <TabPanel>
-            <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
-              <div className="divide-y-2 divide-gray-100">
-                {/* カテゴリに合った記事だけを表示 */}
-                {posts?.filter(post => post.category === "breastfeeding").map((post) => (
-                  <PostListItem key={post.id} post={post} />
-                ))}
-              </div>
-            </div>
+            {posts?.filter(post => post.category === "sleeping").map((post) => (
+              <PostListItem key={post.id} post={post} />
+            ))}
           </TabPanel>
           <TabPanel>
-            <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
-              <div className="divide-y-2 divide-gray-100">
-                {/* カテゴリに合った記事だけを表示 */}
-                {posts?.filter(post => post.category === "sleeping").map((post) => (
-                  <PostListItem key={post.id} post={post} />
-                ))}
-              </div>
-            </div>
-          </TabPanel>
-          <TabPanel>
-            <div className="container py-6 mx-auto text-gray-600 body-font overflow-hidden">
-              <div className="divide-y-2 divide-gray-100">
-                {/* カテゴリに合った記事だけを表示 */}
-                {posts?.filter(post => post.category === "goods").map((post) => (
-                  <PostListItem key={post.id} post={post} />
-                ))}
-              </div>
-            </div>
+            {posts?.filter(post => post.category === "goods").map((post) => (
+              <PostListItem key={post.id} post={post} />
+            ))}
           </TabPanel>
         </Tabs>
         </div>
