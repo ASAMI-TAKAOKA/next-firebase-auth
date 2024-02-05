@@ -1,5 +1,3 @@
-// 参考
-// https://qiita.com/kandalog/items/2e1a499c710afe9c5f4f#usepaginationtsx-%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%83%95%E3%83%83%E3%82%AF
 import Head from "next/head";
 import { GetServerSideProps } from "next";
 import fetch from "node-fetch";
@@ -43,41 +41,13 @@ export default function HomePage({ posts }: Props) {
             ))}
           </TabPanel>
           {/* カテゴリに合った記事だけを表示 */}
-          <TabPanel>
-            {posts?.filter(post => post.category === "house_work").map((post) => (
-              <PostListItem key={post.id} post={post} />
-            ))}
-          </TabPanel>
-          <TabPanel>
-            {posts?.filter(post => post.category === "money").map((post) => (
-              <PostListItem key={post.id} post={post} />
-            ))}
-          </TabPanel>
-          <TabPanel>
-            {posts?.filter(post => post.category === "baby_food").map((post) => (
-              <PostListItem key={post.id} post={post} />
-            ))}
-          </TabPanel>
-          <TabPanel>
-            {posts?.filter(post => post.category === "childbirth").map((post) => (
-              <PostListItem key={post.id} post={post} />
-            ))}
-          </TabPanel>
-          <TabPanel>
-            {posts?.filter(post => post.category === "breastfeeding").map((post) => (
-              <PostListItem key={post.id} post={post} />
-            ))}
-          </TabPanel>
-          <TabPanel>
-            {posts?.filter(post => post.category === "sleeping").map((post) => (
-              <PostListItem key={post.id} post={post} />
-            ))}
-          </TabPanel>
-          <TabPanel>
-            {posts?.filter(post => post.category === "goods").map((post) => (
-              <PostListItem key={post.id} post={post} />
-            ))}
-          </TabPanel>
+          {["house_work", "money", "baby_food", "childbirth", "breastfeeding", "sleeping", "goods"].map((category, index) => (
+            <TabPanel key={index}>
+              {posts?.filter(post => post.category === category).map((post) => (
+                <PostListItem key={post.id} post={post} />
+              ))}
+            </TabPanel>
+          ))}
         </Tabs>
         </div>
       </section>
