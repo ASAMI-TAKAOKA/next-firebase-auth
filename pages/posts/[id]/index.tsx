@@ -68,6 +68,7 @@ export default function PostDetailPage({ post }: Props) {
               src={postImage}
             />
           </div>
+          {/* 表示されない範囲 */}
           <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
             <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
               {post.title}
@@ -95,6 +96,7 @@ export default function PostDetailPage({ post }: Props) {
               )}
             </div>
           </div>
+          {/*  */}
         </div>
       </section>
     </>
@@ -119,45 +121,3 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 
   return { props: { post } };
 };
-
-// Use Static Site Generation
-// export async function getStaticPaths() {
-//   const response = await axios.get("/posts");
-//   const posts: Post[] = response.data;
-
-//   return {
-//     fallback: "blocking",
-//     paths: posts.map((post) => ({
-//       params: {
-//         id: post.id.toString(),
-//       },
-//     })),
-//   };
-// }
-
-// interface Params extends ParsedUrlQuery {
-//   id: string;
-// }
-
-// export const getStaticProps = async (context: GetStaticPropsContext) => {
-//   const { id } = context.params as Params;
-
-//   try {
-//     const response = await axios.get(`/posts/${id}`);
-//     const post: PostData = response.data;
-//     return {
-//       props: {
-//         post: post,
-//       },
-//       revalidate: 1,
-//     };
-//   } catch (err) {
-//     let message;
-//     if (axios.isAxiosError(err) && err.response) {
-//       console.error(err.response.data.message);
-//     } else {
-//       message = String(err);
-//       console.error(message);
-//     }
-//   }
-// };
