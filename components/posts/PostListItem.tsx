@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { PostData } from "types/types";
 import { useState } from "react";
+import { HiOutlineChatAlt } from "react-icons/hi"; // Tailwind CSSのアイコンをインポート
 
 type Props = {
   post: PostData;
@@ -12,8 +13,8 @@ const PostListItem = ({ post }: Props) => {
 
   return (
     <div
-    className={`sm:bg-red-50 md:bg-red-50 lg:bg-red-50 xl:bg-red-50 2xl:bg-red-50 py-8 my-6 px-8 flex flex-wrap md:flex-nowrap rounded-lg${
-      isHovered ? "cursor-pointer" : ""
+      className={`bg-red-50 py-8 my-6 px-8 md:px-12 flex flex-col md:flex-row md:flex-nowrap rounded-lg${
+        isHovered ? " cursor-pointer" : ""
       }`}
       onMouseOver={() => setIsHovered(true)}
       onMouseOut={() => setIsHovered(false)}
@@ -23,14 +24,24 @@ const PostListItem = ({ post }: Props) => {
           {date.toDateString()}
         </span>
       </div>
-      <div className="md:flex-grow">
+      <div className="md:flex-grow flex flex-col md:flex-row w-full md:w-auto">
         <Link href={`/posts/${encodeURIComponent(post.id)}`} legacyBehavior>
-          <a className={`text-2xl font-medium text-gray-800 title-font mb-2 ${isHovered ? "underline" : ""}`}>
+          <a className={`text-2xl font-medium text-gray-600 title-font mb-2 md:mb-0 ${isHovered ? "underline" : ""}`}>
             {post.title}
           </a>
         </Link>
-        <p className="leading-relaxed">{post.body}</p>
+        <p className="leading-relaxed text-gray-600">{post.body}</p>
       </div>
+      {/* コメント用のアイコン */}
+      <Link href={`/posts/${encodeURIComponent(post.id)}`} legacyBehavior>
+        <a>
+          <button
+            className="inline-flex items-center justify-center w-10 h-10 text-gray-600 focus:outline-none hover:bg-gray-300"
+          >
+            <HiOutlineChatAlt size={24}/>
+          </button>
+        </a>
+      </Link>
     </div>
   );
 };
