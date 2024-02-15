@@ -22,7 +22,7 @@ export default function EditPostPage({ post }: PostProp) {
 
   return (
     <>
-      <h3 className="text-3xl font-medium text-center">Edit Post</h3>
+      <h3 className="text-3xl font-medium text-center">編集</h3>
       <PostForm postData={post} />
     </>
   );
