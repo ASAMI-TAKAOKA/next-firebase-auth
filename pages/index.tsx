@@ -21,8 +21,8 @@ export default function HomePage({ posts }: Props) {
           content="This is a app for mom and baby using firebase authenticate"
         />
       </Head>
-      <section className="mx-auto py-10 px-8">
-        <Tabs>
+      <section>
+        <Tabs className="mx-auto py-8 px-8 my-3">
           <TabList>
             <Tab>全ての投稿</Tab>
             <Tab>家事</Tab>
