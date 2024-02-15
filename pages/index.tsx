@@ -22,7 +22,6 @@ export default function HomePage({ posts }: Props) {
         />
       </Head>
       <section className="mx-auto py-10 px-8">
-        <div className="px-40">
         <Tabs>
           <TabList>
             <Tab>全ての投稿</Tab>
@@ -49,7 +48,6 @@ export default function HomePage({ posts }: Props) {
             </TabPanel>
           ))}
         </Tabs>
-        </div>
       </section>
     </>
   );

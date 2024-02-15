@@ -12,7 +12,7 @@ const PostListItem = ({ post }: Props) => {
 
   return (
     <div
-    className={`sm:bg-red-50 md:bg-red-50 lg:bg-red-50 xl:bg-red-50 2xl:bg-red-50 py-8 my-6 px-8 flex flex-wrap md:flex-nowrap rounded-lg${
+    className={`xs:bg-red-50 sm:bg-red-50 md:bg-red-50 lg:bg-red-50 xl:bg-red-50 2xl:bg-red-50 py-8 my-6 px-8 flex flex-wrap md:flex-nowrap rounded-lg${
       isHovered ? "cursor-pointer" : ""
       }`}
       onMouseOver={() => setIsHovered(true)}
