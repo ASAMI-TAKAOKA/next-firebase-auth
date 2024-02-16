@@ -19,9 +19,17 @@ const PostListItem = ({ post }: Props) => {
     return `${year}年${month}月${day}日`;
   };
 
+// 15文字以上の場合に16文字目以降を省略して「...」を表示する関数
+const formatBody = (body: string) => {
+  if (body.length > 15) {
+    return body.slice(0, 15) + "...";
+  }
+  return body;
+};
+
   return (
     <div
-    className={`bg-red-50 py-8 px-10 my-6 xs:mx-0 sm:mx-0 md:mx-0 lg:mx-64 flex flex-wrap rounded-lg${
+    className={`bg-red-50 py-8 px-10 my-6 xs:mx-0 sm:mx-0 md:mx-0 lg:mx-72 rounded-lg${
       isHovered ? "cursor-pointer" : ""
       }`}
       onMouseOver={() => setIsHovered(true)}
@@ -39,7 +47,7 @@ const PostListItem = ({ post }: Props) => {
             {post.title}
           </a>
         </Link>
-        <p className="leading-relaxed text-gray-600">{post.body}</p>
+        <p className="leading-relaxed text-gray-600">{formatBody(post.body)}</p>
         {/* コメント用のアイコン */}
         <Link href={`/posts/${encodeURIComponent(post.id)}`} legacyBehavior>
           <a>
