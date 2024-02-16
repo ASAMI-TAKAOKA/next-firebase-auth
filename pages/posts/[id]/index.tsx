@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import axios from "axios";
 import Image from "next/image";
+import { HiOutlineChatAlt } from "react-icons/hi";
 
 import { PostData } from "types/types";
 import { useAuthContext } from "context/AuthContext";
@@ -104,6 +105,13 @@ export default function PostDetailPage({ post }: Props) {
             </div>
           </div>
         </div>
+        {/* コメント用のアイコン */}
+        <Link href={`/posts/${encodeURIComponent(post.id)}`} legacyBehavior>
+          <a className="flex items-center">
+            <HiOutlineChatAlt className="w-6 h-6 text-gray-600" size={24} />
+            <span className="text-gray-600 ml-1 hover:bg-gray-300">コメントする</span>
+          </a>
+        </Link>
         <div>
           <CommentIndex post={post} />
         </div>
