@@ -10,7 +10,7 @@ export interface PostData extends PostInputs {
   created_at: string;
   comments: [{
     id: number;
-    comment_contents: string;
+    comment_content: string;
     created_at: string
   }];
 }
