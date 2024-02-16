@@ -21,6 +21,14 @@ export default function PostDetailPage({ post }: Props) {
   const router = useRouter();
   const date = new Date(post.created_at);
 
+  // 任意のフォーマットで日付を表示する関数
+  const formatDate = (date: { getFullYear: () => number; getMonth: () => number; getDate: () => number; }) => {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year}年${month}月${day}日`;
+  };  
+
   useEffect(() => {
     if (currentUser && currentUser.uid === post.user_uid) {
       setIsAuthor(true);
@@ -73,7 +81,7 @@ export default function PostDetailPage({ post }: Props) {
             <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
               {post.title}
             </h1>
-            <p className="mb-4"> {date.toDateString()}</p>
+            <p className="mb-4"> {formatDate(date)}</p>
 
             <p className="mb-8 leading-relaxed ">{post.body}</p>
             <div className="flex justify-center">

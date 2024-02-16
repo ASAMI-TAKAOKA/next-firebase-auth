@@ -11,6 +11,14 @@ const PostListItem = ({ post }: Props) => {
   const date = new Date(post.created_at);
   const [isHovered, setIsHovered] = useState(false);
 
+  // 任意のフォーマットで日付を表示する関数
+  const formatDate = (date: { getFullYear: () => number; getMonth: () => number; getDate: () => number; }) => {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year}年${month}月${day}日`;
+  };
+
   return (
     <div
     className={`bg-red-50 py-8 px-10 my-6 xs:mx-0 sm:mx-0 md:mx-0 lg:mx-64 flex flex-wrap rounded-lg${
@@ -21,7 +29,7 @@ const PostListItem = ({ post }: Props) => {
     >
       <div className="md:w-64 md:mb-0 mb-6">
         <span className="mt-1 text-gray-500 text-sm">
-          {date.toDateString()}
+          {formatDate(date)}
         </span>
       </div>
       {/* TODO: レスポンシブにするためにあとでclassを追加 */}
