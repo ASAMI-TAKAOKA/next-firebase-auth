@@ -52,7 +52,7 @@ const formatBody = (body: string) => {
         <Link href={`/posts/${encodeURIComponent(post.id)}`} legacyBehavior>
           <a>
             <button
-              className=" items-center justify-center w-10 h-10 text-gray-600 focus:outline-none hover:bg-gray-300"
+              className="w-6 h-10 text-gray-600 focus:outline-none hover:bg-gray-300"
             >
               <HiOutlineChatAlt size={24}/>
             </button>
