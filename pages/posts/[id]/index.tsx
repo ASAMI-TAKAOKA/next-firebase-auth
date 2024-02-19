@@ -12,6 +12,7 @@ import { PostData } from "types/types";
 import { useAuthContext } from "context/AuthContext";
 import postImage from "components/posts/postImage.png";
 import CommentIndex from "components/posts/CommentIndex";
+import CommentModal from "components/modal/CommentModal";
 
 export type Props = {
   post: PostData;
@@ -29,7 +30,18 @@ export default function PostDetailPage({ post }: Props) {
     const month = date.getMonth() + 1;
     const day = date.getDate();
     return `${year}年${month}月${day}日`;
-  };  
+  };
+
+  // isOpenというstateを使用し、コメントモーダルが開いているかどうかを管理
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     if (currentUser && currentUser.uid === post.user_uid) {
@@ -107,11 +119,12 @@ export default function PostDetailPage({ post }: Props) {
         </div>
         {/* コメント用のアイコン */}
         <Link href={`/posts/${encodeURIComponent(post.id)}`} legacyBehavior>
-          <a className="flex items-center">
+          <a className="flex items-center" onClick={handleOpenModal}>
             <HiOutlineChatAlt className="w-6 h-6 text-gray-600" size={24} />
             <span className="text-gray-600 ml-1 hover:bg-gray-300">コメントする</span>
           </a>
         </Link>
+        {isModalOpen && <CommentModal postId={post.id} onClose={handleCloseModal} />}
         <div>
           <CommentIndex post={post} />
         </div>

@@ -2,18 +2,19 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuthContext } from "context/AuthContext";
+import { CommentInputs } from "types/types";
 
-type CommentModalProps = {
+type Props = {
   postId: number;
   onClose: () => void;
 };
 
-type CommentInputs = {
-  content: string;
-};
+export default function CommentModal(props: Props) {
 
-const CommentModal: React.FC<CommentModalProps> = ({ postId, onClose }) => {
   const { currentUser } = useAuthContext();
+  const postId = props?.postId;
+  const onClose = props?.onClose;
+
   const {
     register,
     handleSubmit,
@@ -60,7 +61,7 @@ const CommentModal: React.FC<CommentModalProps> = ({ postId, onClose }) => {
         <h2 className="text-lg font-semibold mb-4">コメントを追加する</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
-            <label htmlFor="content" className="block text-sm font-medium text-gray-600">
+            <label htmlFor="comment_content" className="block text-sm font-medium text-gray-600">
               コメント内容
             </label>
             <textarea
@@ -92,5 +93,3 @@ const CommentModal: React.FC<CommentModalProps> = ({ postId, onClose }) => {
     </div>
   );
 };
-
-export default CommentModal;
