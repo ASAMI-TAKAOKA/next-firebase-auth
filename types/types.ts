@@ -14,3 +14,7 @@ export interface PostData extends PostInputs {
     created_at: string
   }];
 }
+
+export interface CommentInputs {
+  content: string;
+}
