@@ -58,7 +58,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 ) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/posts/`);
 
-  const posts: PostData[] = (await res.json()) as any;
+  let posts: PostData[] = [];
+
+  if (res.ok) {
+    posts = (await res.json()) as PostData[];
+  }
 
   res.headers.set(
     "Cache-Control",
