@@ -1,4 +1,9 @@
-import { PostData } from "types/types";
+import { useState, useEffect } from 'react';
+import { PostData, CommentData } from "types/types";
+import CommentModal from "components/modal/CommentModal";
+import axios from "axios";
+import Link from "next/link";
+import { HiOutlineChatAlt } from "react-icons/hi";
 
 type Props = {
   post: PostData;
@@ -15,8 +20,42 @@ const CommentIndex = ({ post }: Props) => {
     return `${year}年${month}月${day}日`;
   };
 
+  const [comments, setComments] = useState<CommentData>();
+
+  const fetchComments = async () => {
+    try {
+      const response = await axios.get(`posts/${post.id}/comments`);
+      setComments(response.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchComments();
+  }, [post.id]); // post.idが変更されたときにコメント一覧を再取得
+
+  // isModalOpenというstateを使用し、コメントモーダルが開いているかどうかを管理
+  // isModalOpenのデフォルトはfalse
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <section>
+      {/* コメント用のアイコン */}
+      <Link href={`/posts/${encodeURIComponent(post.id)}`} legacyBehavior>
+        <a className="flex items-center" onClick={handleOpenModal}>
+          <HiOutlineChatAlt className="w-6 h-6 text-gray-600" size={24} />
+          <span className="text-gray-600 ml-1 hover:bg-gray-300">コメントする</span>
+        </a>
+      </Link>
       <div>
         コメント一覧
       </div>
@@ -32,6 +71,7 @@ const CommentIndex = ({ post }: Props) => {
             </div>
           );
         })}
+        {isModalOpen &&<CommentModal postId={post.id} onClose={handleCloseModal} />}
       </div>
     </section>
 
