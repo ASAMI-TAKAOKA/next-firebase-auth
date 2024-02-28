@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuthContext } from "context/AuthContext";
 import { CommentInputs } from "types/types";
+import { CommentData } from "types/types";
 
 type Props = {
   postId: number;
@@ -19,6 +20,7 @@ export default function CommentModal(props: Props) {
     register,
     handleSubmit,
     formState: { errors },
+    reset // フォームをリセットする関数
   } = useForm<CommentInputs>();
 
   const setConfig = async () => {
@@ -48,6 +50,9 @@ export default function CommentModal(props: Props) {
       if (response.status === 200) {
         toast.success("コメントが追加されました！");
         onClose(); // モーダルを閉じる
+
+        // props.onCommentAdd(response.data); // コールバック関数（Vueでいうところのemit）
+        reset(); // フォームをリセット
       }
     } catch (err) {
       toast.error("コメントの追加に失敗しました。");

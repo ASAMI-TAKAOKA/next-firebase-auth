@@ -18,3 +18,8 @@ export interface PostData extends PostInputs {
 export interface CommentInputs {
   content: string;
 }
+
+export interface CommentData extends CommentInputs {
+  id: number;
+  created_at: string;
+}
