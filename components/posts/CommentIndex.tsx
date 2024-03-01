@@ -49,32 +49,37 @@ const CommentIndex = ({ post }: Props) => {
 
   return (
     <section>
-      {/* コメント用のアイコン */}
-      <Link href={`/posts/${encodeURIComponent(post.id)}`} legacyBehavior>
-        <a className="flex items-center" onClick={handleOpenModal}>
-          <HiOutlineChatAlt className="w-6 h-6 text-gray-600" size={24} />
-          <span className="text-gray-600 ml-1 hover:bg-gray-300">コメントする</span>
-        </a>
-      </Link>
-      <div>
-        コメント一覧
-      </div>
-      <div className="bg-red-50 py-8 px-10 my-6 mx-auto rounded-lg">
-        {post.comments.map((comment) => {
-          const date = new Date(comment.created_at);
-          return (
-            <div key={comment.id} className="mb-4">
-              <span className="text-gray-500 text-sm">
-                {formatDate(date)}
-              </span>
-              <p className="leading-relaxed text-gray-600">{comment.comment_content}</p>
-            </div>
-          );
-        })}
-        {isModalOpen &&<CommentModal postId={post.id} onClose={handleCloseModal} />}
-      </div>
+      {post.comments ? (
+        <>
+          {/* コメント用のアイコン */}
+          <Link href={`/posts/${encodeURIComponent(post.id)}`} legacyBehavior>
+            <a className="flex items-center" onClick={handleOpenModal}>
+              <HiOutlineChatAlt className="w-6 h-6 text-gray-600" size={24} />
+              <span className="text-gray-600 ml-1 hover:bg-gray-300">コメントする</span>
+            </a>
+          </Link>
+          <div>
+            コメント一覧
+          </div>
+          <div className="bg-red-50 py-8 px-10 my-6 mx-auto rounded-lg">
+            {post.comments.map((comment) => {
+              const date = new Date(comment.created_at);
+              return (
+                <div key={comment.id} className="mb-4">
+                  <span className="text-gray-500 text-sm">
+                    {formatDate(date)}
+                  </span>
+                  <p className="leading-relaxed text-gray-600">{comment.comment_content}</p>
+                </div>
+              );
+            })}
+            {isModalOpen &&<CommentModal postId={post.id} onClose={handleCloseModal} />}
+          </div>
+        </>
+      ) : (
+        <p>そのIDの記事は存在しません。</p>
+      )}
     </section>
-
   );
 };
 
