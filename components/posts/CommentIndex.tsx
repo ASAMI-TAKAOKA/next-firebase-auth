@@ -20,12 +20,10 @@ const CommentIndex = ({ post }: Props) => {
     return `${year}年${month}月${day}日`;
   };
 
-  const [comments, setComments] = useState<CommentData>();
-
   const fetchComments = async () => {
     try {
       const response = await axios.get(`posts/${post.id}/comments`);
-      setComments(response.data);
+      setComments(response.data); // その結果を反映させる
     } catch (err) {
       console.error(err);
     }
@@ -45,6 +43,22 @@ const CommentIndex = ({ post }: Props) => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+  };
+
+  const [comments, setComments] = useState<CommentData[]>([]);
+  // handleCommentAdd関数はonCommentAdd関数としてCommentModalに渡している
+  // onSubmit関数が実行された際、コールバック関数として実行される関数である
+  const handleCommentAdd = async (comment: CommentData) => {
+    try {
+      const newComment = comment;
+      console.log(newComment);
+      const updatedComments = [newComment, ...comments];
+      console.log(updatedComments);
+      setComments(updatedComments); // その結果を反映させる
+      console.log("Updated comments:", updatedComments); // 更新後のコメント一覧をログに出力
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -73,7 +87,7 @@ const CommentIndex = ({ post }: Props) => {
                 </div>
               );
             })}
-            {isModalOpen &&<CommentModal postId={post.id} onClose={handleCloseModal} />}
+            {isModalOpen &&<CommentModal postId={post.id} onClose={handleCloseModal} onCommentAdd={handleCommentAdd}/>}
           </div>
         </>
       ) : (

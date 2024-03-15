@@ -8,6 +8,7 @@ import { CommentData } from "types/types";
 type Props = {
   postId: number;
   onClose: () => void;
+  onCommentAdd: (comment: CommentData) => void; // コメントが追加されたときのコールバック関数。
 };
 
 export default function CommentModal(props: Props) {
@@ -31,6 +32,8 @@ export default function CommentModal(props: Props) {
     return config;
   };
 
+  // onSubmit関数はonCommentAdd関数の高階関数なので、
+  // onSubmit関数はonCommentAdd関数を引数として(ここではpropsとして)受け取って実行し、親コンポーネントに通知している
   const onSubmit: SubmitHandler<CommentInputs> = async (commentInputData) => {
     // 送信ボタン押下時consoleにこのログが表示される場合、onSubmit関数が機能していることが分かる
     console.log("Form Submitted with data:", commentInputData);
@@ -49,10 +52,13 @@ export default function CommentModal(props: Props) {
 
       if (response.status === 200) {
         toast.success("コメントが追加されました！");
-        onClose(); // モーダルを閉じる
+        console.log(response)
+        console.log(response.data)
+        console.log(response.data.comment_content)
+        onClose();
 
-        // props.onCommentAdd(response.data); // コールバック関数（Vueでいうところのemit）
-        reset(); // フォームをリセット
+        props.onCommentAdd(response.data); // 親コンポーネントにコメント追加を通知
+        reset();
       }
     } catch (err) {
       toast.error("コメントの追加に失敗しました。");
