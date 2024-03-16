@@ -5,6 +5,7 @@ import { PostData } from "types/types";
 import 'react-tabs/style/react-tabs.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import PostListItem from "components/posts/PostListItem";
+import Calendar from "components/Calendar";
 
 type Props = {
   posts: PostData[];
@@ -22,6 +23,7 @@ export default function HomePage({ posts }: Props) {
         />
       </Head>
       <section>
+        {/* 投稿記事一覧 */}
         <Tabs className="mx-auto py-8 px-8 my-3">
           <TabList>
             <Tab>全ての投稿</Tab>
@@ -33,20 +35,27 @@ export default function HomePage({ posts }: Props) {
             <Tab>ねんね</Tab>
             <Tab >グッズ</Tab>
           </TabList>
-
-          <TabPanel>
-            {posts?.map((post) => (
-              <PostListItem key={post.id} post={post} />
-            ))}
-          </TabPanel>
-          {/* カテゴリに合った記事だけを表示 */}
-          {["house_work", "money", "baby_food", "childbirth", "breastfeeding", "sleeping", "goods"].map((category, index) => (
-            <TabPanel key={index}>
-              {posts?.filter(post => post.category === category).map((post) => (
+          <section className="flex justify-between mx-auto py-8 px-8 my-3">
+            <div>
+              <TabPanel>
+              {posts?.map((post) => (
                 <PostListItem key={post.id} post={post} />
               ))}
-            </TabPanel>
-          ))}
+              </TabPanel>
+              {/* カテゴリに合った記事だけを表示 */}
+              {["house_work", "money", "baby_food", "childbirth", "breastfeeding", "sleeping", "goods"].map((category, index) => (
+                <TabPanel key={index}>
+                  {posts?.filter(post => post.category === category).map((post) => (
+                    <PostListItem key={post.id} post={post} />
+                  ))}
+                </TabPanel>
+              ))}
+            </div>
+            <div>
+              {/* カレンダーコンポーネント */}
+              <Calendar />
+            </div>
+          </section>
         </Tabs>
       </section>
     </>

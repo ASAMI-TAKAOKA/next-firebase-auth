@@ -20,6 +20,7 @@
     "node-fetch": "^3.3.2",
     "react": "^18",
     "react-dom": "^18",
+    "react-google-calendar-api": "^2.3.0",
     "react-hook-form": "^7.47.0",
     "react-icons": "^5.0.1",
     "react-tabs": "^6.0.2",
