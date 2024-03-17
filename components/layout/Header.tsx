@@ -81,7 +81,7 @@ const Header = () => {
             {currentUser ? (
               <LogoutButton onLogout={logoutHandler} />
             ) : (
-              <LoginButton />
+              <LoginButton onClick={() => setOpen(false)} />
             )}
           </li>
         </ul>
