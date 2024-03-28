@@ -5,13 +5,18 @@ import { PostData } from "types/types";
 import 'react-tabs/style/react-tabs.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import PostListItem from "components/posts/PostListItem";
-import Calendar from "components/Calendar";
-
+import { TitleHeaderSection } from 'components/calendar/TitleHeaderSection';
+import { CardSection } from 'components/calendar/CardSection';
+import { createCalendarArray } from "utils/createCalendarArray";
+import dayjs from 'dayjs';
 type Props = {
   posts: PostData[];
 };
 
 export default function HomePage({ posts }: Props) {
+  const year = dayjs().format('YYYY');
+  const month = dayjs().format('M');
+  const calendarArray = createCalendarArray(year, month);
 
   return (
     <>
@@ -52,8 +57,9 @@ export default function HomePage({ posts }: Props) {
               ))}
             </div>
             <div>
-              {/* カレンダーコンポーネント */}
-              <Calendar />
+              {/* カレンダー */}
+              <TitleHeaderSection year={year} month={month}/>
+              <CardSection calendarArray={calendarArray} month={month}/>
             </div>
           </section>
         </Tabs>
