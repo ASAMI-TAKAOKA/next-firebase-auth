@@ -4,7 +4,7 @@ const ColItem = ({ children }: { children: React.ReactNode }) => (
 
 export const CalendarHeaderRow = () => {
   return (
-    <div className="flex flex-row py-2 border-b border-b-gray-400">
+    <div className="border-b border-b-gray-400 flex flex-row">
       <ColItem>月</ColItem>
       <ColItem>火</ColItem>
       <ColItem>水</ColItem>

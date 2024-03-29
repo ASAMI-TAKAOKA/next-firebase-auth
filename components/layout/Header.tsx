@@ -12,10 +12,10 @@ import { useAuthContext } from "context/AuthContext";
 const Header = () => {
   const { currentUser, loading, logout } = useAuthContext();
   const userPhotoUrl = currentUser?.photoURL;
-  const [isOpen, setOpen] = useState<boolean>(false);
+  const [hamburgerMenuIsOpen, setHamburgerMenuOpen] = useState<boolean>(false);
 
   const handleMenuToggle = () => {
-    setOpen(!isOpen);
+    setHamburgerMenuOpen(!hamburgerMenuIsOpen);
   };
 
   useEffect(() => {
@@ -39,19 +39,19 @@ const Header = () => {
       </Link>
       <nav
         className={
-          isOpen
+          hamburgerMenuIsOpen
             ? "z-40 bg-blue-100 fixed top-0 right-0 bottom-0 left-0 h-screen flex flex-col"
-            : "fixed right-[-100%] md:right-4"
+            : "fixed right-[-100%] lg:right-4 "
         }
       >
         <ul
           className={
-            isOpen
+            hamburgerMenuIsOpen
               ? "flex h-screen justify-center items-center flex-col gap-6 text-xl"
               : "block md:flex md:gap-8"
           }
         >
-        {!isOpen && (
+        {!hamburgerMenuIsOpen && (
           <li>
             {userPhotoUrl && (
               <Image
@@ -60,7 +60,7 @@ const Header = () => {
                 referrerPolicy="no-referrer"
                 width={24}
                 height={24}
-                className="h-10 w-10 rounded-full object-cover hidden md:block"
+                className="h-10 w-10 rounded-full object-cover md:block"
               />
             )}
           </li>
@@ -68,7 +68,7 @@ const Header = () => {
           <li>
             {currentUser && (
               <Link
-                onClick={() => setOpen(false)}
+                onClick={() => setHamburgerMenuOpen(false)}
                 href="/posts/new"
                 className="block rounded-lg bg-pink-400 px-5 py-3 text-sm font-medium text-white transition hover:bg-pink-700 focus:outline-none focus:ring"
                 type="button"
@@ -81,30 +81,30 @@ const Header = () => {
             {currentUser ? (
               <LogoutButton onLogout={logoutHandler} />
             ) : (
-              <LoginButton onClick={() => setOpen(false)} />
+              <LoginButton onClick={() => setHamburgerMenuOpen(false)} />
             )}
           </li>
         </ul>
       </nav>
       <button
-        className="z-50 space-y-2 md:hidden"
+        className="z-50 space-y-2 lg:hidden"
         onClick={handleMenuToggle}
       >
         <span
           className={
-            isOpen
+            hamburgerMenuIsOpen
               ? "block w-8 h-0.5 bg-gray-600 translate-y-2.5 rotate-45 duration-300"
               : "block w-8 h-0.5 bg-gray-600 duration-300"
           }
         />
         <span
           className={
-            isOpen ? "block opacity-0 duration-300" : "block w-8 h-0.5 bg-gray-600 duration-300"
+            hamburgerMenuIsOpen ? "block opacity-0 duration-300" : "block w-8 h-0.5 bg-gray-600 duration-300"
           }
         />
         <span
           className={
-            isOpen
+            hamburgerMenuIsOpen
               ? "block w-8 h-0.5 bg-gray-600 -rotate-45 duration-300"
               : "block w-8 h-0.5 bg-gray-600 duration-300"
           }

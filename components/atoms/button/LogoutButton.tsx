@@ -6,7 +6,7 @@ const LogoutButton = ({ onLogout }: Props) => {
   return (
     <button
       onClick={onLogout}
-      className="inline-flex items-center justify-center rounded-lg border border-gray-200 px-5 py-3 text-gray-500 transition hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:ring"
+      className="inline-flex items-center justify-center rounded-lg border border-gray-300 px-5 py-3 text-gray-500 transition hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:ring"
       type="button"
     >
       <span className="text-sm font-medium">ログアウト </span>

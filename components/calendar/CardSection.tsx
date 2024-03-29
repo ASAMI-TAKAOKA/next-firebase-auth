@@ -11,7 +11,7 @@ type Props = {
 
 export const CardSection = ({calendarArray, month}: Props) => {
   return (
-    <div className="flex flex-col p-2 border border-gray-500 rounded-md gap-4">
+    <div className="bg-blue-50 border border-gray-500 flex flex-col p-8 rounded-md gap-4">
       <CalendarHeaderRow />
       <CalendarBody calendarArray={calendarArray} month={month}/>
     </div>
