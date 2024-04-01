@@ -14,11 +14,7 @@ export const CalendarCol = ({ day, date }: Props) => {
   const today = dayjs().format('YYYY-MM-DD')
 
   const stampAction = () => {
-    if (today >= date) {
-      setStamped(true)
-    } else {
-      toast.error('未来の日付は押せません')
-    }
+    setStamped(true)
   }
 
   return (
