@@ -5,12 +5,21 @@ import { PostData } from "types/types";
 import 'react-tabs/style/react-tabs.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import PostListItem from "components/posts/PostListItem";
+import { TitleHeaderSection } from 'components/calendar/TitleHeaderSection';
+import { CardSection } from 'components/calendar/CardSection';
+import { createCalendarArray } from "utils/createCalendarArray";
+import dayjs from 'dayjs';
+import { useMediaQuery } from 'react-responsive';
 
 type Props = {
   posts: PostData[];
 };
 
 export default function HomePage({ posts }: Props) {
+  const year = dayjs().format('YYYY');
+  const month = dayjs().format('M');
+  const calendarArray = createCalendarArray(year, month);
+  const isMobileAndTablet = useMediaQuery({ maxWidth: 1023 }); // xs and sm and md breakpoint
 
   return (
     <>
@@ -22,6 +31,7 @@ export default function HomePage({ posts }: Props) {
         />
       </Head>
       <section>
+        {/* 投稿記事一覧 */}
         <Tabs className="mx-auto py-8 px-8 my-3">
           <TabList>
             <Tab>全ての投稿</Tab>
@@ -33,20 +43,31 @@ export default function HomePage({ posts }: Props) {
             <Tab>ねんね</Tab>
             <Tab >グッズ</Tab>
           </TabList>
-
-          <TabPanel>
-            {posts?.map((post) => (
-              <PostListItem key={post.id} post={post} />
-            ))}
-          </TabPanel>
-          {/* カテゴリに合った記事だけを表示 */}
-          {["house_work", "money", "baby_food", "childbirth", "breastfeeding", "sleeping", "goods"].map((category, index) => (
-            <TabPanel key={index}>
-              {posts?.filter(post => post.category === category).map((post) => (
-                <PostListItem key={post.id} post={post} />
-              ))}
-            </TabPanel>
-          ))}
+          <section className="container flex justify-between mx-auto py-8 px-8 my-3">
+            {/* スマホとタブレット以外(PC等)の場合のみ、以下の通りカレンダーを表示させる */}
+            {!isMobileAndTablet && (
+              <div>
+                {/* カレンダー */}
+                <TitleHeaderSection year={year} month={month}/>
+                <CardSection calendarArray={calendarArray} month={month}/>
+              </div>
+            )}
+              <div>
+                <TabPanel>
+                  {posts?.map((post) => (
+                    <PostListItem key={post.id} post={post} />
+                  ))}
+                </TabPanel>
+                {/* カテゴリに合った記事だけを表示 */}
+                {["house_work", "money", "baby_food", "childbirth", "breastfeeding", "sleeping", "goods"].map((category, index) => (
+                  <TabPanel key={index}>
+                    {posts?.filter(post => post.category === category).map((post) => (
+                      <PostListItem key={post.id} post={post} />
+                    ))}
+                  </TabPanel>
+                ))}
+              </div>
+          </section>
         </Tabs>
       </section>
     </>
