@@ -8,6 +8,7 @@ import Image from "next/image";
 import LoginButton from "../atoms/button/LoginButton";
 import LogoutButton from "../atoms/button/LogoutButton";
 import { useAuthContext } from "context/AuthContext";
+import MobileAndTabletCalendar from "pages/mobile-and-tablet-calendar";
 
 const Header = () => {
   const { currentUser, loading, logout } = useAuthContext();
@@ -77,6 +78,16 @@ const Header = () => {
               </Link>
             )}
           </li>
+            {currentUser && (
+              <Link
+                onClick={() => setHamburgerMenuOpen(false)}
+                href="/mobile-and-tablet-calendar"
+                className="block rounded-lg bg-pink-400 px-5 py-3 text-sm font-medium text-white transition hover:bg-pink-700 focus:outline-none focus:ring"
+                type="button"
+              >
+                献立を登録する
+              </Link>
+            )}
           <li>
             {currentUser ? (
               <LogoutButton onLogout={logoutHandler} />
