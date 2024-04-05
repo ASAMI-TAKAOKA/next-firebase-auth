@@ -46,7 +46,7 @@ export default function HomePage({ posts }: Props) {
           <section className="container flex justify-between mx-auto py-8 px-8 my-3">
             {/* スマホとタブレット以外(PC等)の場合のみ、以下の通りカレンダーを表示させる */}
             {!isMobileAndTablet && (
-              <div className="bg-green-50 py-8 px-20 my-6 rounded-lg flex flex-col items-center gap-4">
+              <div className="py-8 px-20 my-6 rounded-lg flex flex-col items-center gap-4">
                 <h2>離乳食の献立を登録する</h2>
                 {/* カレンダー */}
                 <TitleHeaderSection year={year} month={month}/>

@@ -10,7 +10,7 @@ const MobileAndTabletCalendar = () => {
   const calendarArray = createCalendarArray(year, month);
 
   return (
-    <div className="bg-green-50 py-8 px-20 my-6 rounded-lg flex flex-col items-center gap-4">
+    <div className="py-8 px-20 my-6 rounded-lg flex flex-col items-center gap-4">
       <h2>離乳食の献立を登録する</h2>
       <div>
         {/* カレンダー */}
