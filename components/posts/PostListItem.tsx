@@ -19,17 +19,25 @@ const PostListItem = ({ post }: Props) => {
     return `${year}年${month}月${day}日`;
   };
 
-// 15文字以上の場合に16文字目以降を省略して「...」を表示する関数
+// 10文字以上の場合に11文字目以降を省略して「...」を表示する関数
+const formatTitle = (title: string) => {
+  if (title.length > 10) {
+    return title.slice(0, 10) + "...";
+  }
+  return title;
+};
+
+// 10文字以上の場合に11文字目以降を省略して「...」を表示する関数
 const formatBody = (body: string) => {
-  if (body.length > 15) {
-    return body.slice(0, 15) + "...";
+  if (body.length > 10) {
+    return body.slice(0, 10) + "...";
   }
   return body;
 };
 
   return (
     <div
-    className={`bg-red-50 border border-gray-500 p-8 m-6 xs:mr-28 md:ml-28 flex flex-col rounded-md${
+    className={`px-24 py-5 m-3 xs:mr-40 sm:mr-6 sm:ml-4 bg-red-50 border border-gray-500 flex flex-col rounded-md${
       isHovered ? "cursor-pointer rounded-md" : ""
       }`}
       onMouseOver={() => setIsHovered(true)}
@@ -40,11 +48,10 @@ const formatBody = (body: string) => {
           {formatDate(date)}
         </span>
       </div>
-      {/* TODO: レスポンシブにするためにあとでclassを追加 */}
-      <div className="">
+      <div>
         <Link href={`/posts/${encodeURIComponent(post.id)}`} legacyBehavior>
           <a className={`text-2xl font-medium text-gray-600 title-font mb-2 md:mb-0 ${isHovered ? "underline" : ""}`}>
-            {post.title}
+            {formatTitle(post.title)}
           </a>
         </Link>
         <p className="leading-relaxed text-gray-600">{formatBody(post.body)}</p>

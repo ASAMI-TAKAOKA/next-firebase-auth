@@ -7,10 +7,13 @@ import dayjs from 'dayjs';
 const MobileAndTabletCalendar = () => {
   const year = dayjs().format('YYYY');
   const month = dayjs().format('M');
+  // createCalendarArray(year, month)により、
+  // calendarArray というプロパティの要素の1つであるdateには、
+  // "2022-04-15" のような形式で日付が格納される
   const calendarArray = createCalendarArray(year, month);
 
   return (
-    <div className="py-8 px-20 my-6 rounded-lg flex flex-col items-center gap-4">
+    <div className="container mx-auto px-5 py-10 rounded-lg flex flex-col items-center gap-4">
       <h2>離乳食の献立を登録する</h2>
       <div>
         {/* カレンダー */}

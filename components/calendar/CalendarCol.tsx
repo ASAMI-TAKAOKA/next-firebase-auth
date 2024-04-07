@@ -1,7 +1,6 @@
 'use client'
 import { useState } from 'react'
 import dayjs from 'dayjs'
-import toast from 'react-hot-toast'
 import { Stamp } from 'components/calendar/Stamp'
 
 type Props = {
