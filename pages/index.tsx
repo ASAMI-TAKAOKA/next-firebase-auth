@@ -32,7 +32,7 @@ export default function HomePage({ posts }: Props) {
       </Head>
       <section>
         {/* 投稿記事一覧 */}
-        <Tabs className="mx-auto py-8 px-3 mx-3 my-3">
+        <Tabs className="container mx-auto py-8 px-3 mx-3 my-3">
           <TabList>
             <Tab>全ての投稿</Tab>
             <Tab>家事</Tab>
@@ -43,7 +43,7 @@ export default function HomePage({ posts }: Props) {
             <Tab>ねんね</Tab>
             <Tab >グッズ</Tab>
           </TabList>
-          <section className="container mx-auto px-28 py-10 flex justify-between">
+          <div className="px-8 py-8">
             {/* スマホとタブレット以外(PC等)の場合のみ、以下の通りカレンダーを表示させる */}
             {!isMobileAndTablet && (
               <div className="rounded-lg flex flex-col items-center gap-4">
@@ -68,7 +68,7 @@ export default function HomePage({ posts }: Props) {
                   </TabPanel>
                 ))}
               </div>
-          </section>
+          </div>
         </Tabs>
       </section>
     </>
