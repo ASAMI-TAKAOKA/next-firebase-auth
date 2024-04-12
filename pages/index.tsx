@@ -43,32 +43,51 @@ export default function HomePage({ posts }: Props) {
             <Tab>ねんね</Tab>
             <Tab >グッズ</Tab>
           </TabList>
-          <div className="px-8 py-8">
-            {/* スマホとタブレット以外(PC等)の場合のみ、以下の通りカレンダーを表示させる */}
-            {!isMobileAndTablet && (
-              <div className="rounded-lg flex flex-col items-center gap-4">
-                <h2>離乳食の献立を登録する</h2>
-                {/* カレンダー */}
-                <TitleHeaderSection year={year} month={month}/>
-                <CardSection calendarArray={calendarArray} month={month}/>
-              </div>
-            )}
+          {/* スマホとタブレットの場合、記事一覧のみ。離乳食登録カレンダーは非表示 */}
+            {isMobileAndTablet && (
               <div>
-                <TabPanel>
-                  {posts?.map((post) => (
-                    <PostListItem key={post.id} post={post} />
-                  ))}
-                </TabPanel>
-                {/* カテゴリに合った記事だけを表示 */}
-                {["house_work", "money", "baby_food", "childbirth", "breastfeeding", "sleeping", "goods"].map((category, index) => (
-                  <TabPanel key={index}>
-                    {posts?.filter(post => post.category === category).map((post) => (
+                  <TabPanel>
+                    {posts?.map((post) => (
                       <PostListItem key={post.id} post={post} />
                     ))}
                   </TabPanel>
-                ))}
+                  {/* カテゴリに合った記事だけを表示 */}
+                  {["house_work", "money", "baby_food", "childbirth", "breastfeeding", "sleeping", "goods"].map((category, index) => (
+                    <TabPanel key={index}>
+                      {posts?.filter(post => post.category === category).map((post) => (
+                        <PostListItem key={post.id} post={post} />
+                      ))}
+                    </TabPanel>
+                  ))}
               </div>
-          </div>
+              )}
+          {/* スマホとタブレット以外(PC等)の場合、水平にアイテムを表示 */}
+            {!isMobileAndTablet && (
+              <section className="container px-20 py-8 flex justify-between">
+                <div className="rounded-lg flex flex-col items-center gap-4">
+                  <h2>離乳食の献立を登録する</h2>
+                  {/* カレンダー */}
+                  <TitleHeaderSection year={year} month={month} />
+                  <CardSection calendarArray={calendarArray} month={month} />
+                </div>
+                <div className="container py-3 px-16">
+                  <h2 className="text-center">投稿記事</h2>
+                    <TabPanel>
+                      {posts?.map((post) => (
+                        <PostListItem key={post.id} post={post} />
+                      ))}
+                    </TabPanel>
+                    {/* カテゴリに合った記事だけを表示 */}
+                    {["house_work", "money", "baby_food", "childbirth", "breastfeeding", "sleeping", "goods"].map((category, index) => (
+                      <TabPanel key={index}>
+                        {posts?.filter(post => post.category === category).map((post) => (
+                          <PostListItem key={post.id} post={post} />
+                        ))}
+                      </TabPanel>
+                    ))}
+                </div>
+              </section>
+              )}
         </Tabs>
       </section>
     </>

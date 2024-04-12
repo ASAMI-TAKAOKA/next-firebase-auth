@@ -37,7 +37,7 @@ const formatBody = (body: string) => {
 
   return (
     <div
-    className={`p-5 m-2 sm:mr-6 sm:ml-4 bg-red-50 border border-gray-500 flex flex-col rounded-md${
+    className={`p-6 m-5 sm:mr-6 sm:ml-4 bg-red-50 border border-gray-500 flex flex-col rounded-md${
       isHovered ? "cursor-pointer rounded-md" : ""
       }`}
       onMouseOver={() => setIsHovered(true)}
