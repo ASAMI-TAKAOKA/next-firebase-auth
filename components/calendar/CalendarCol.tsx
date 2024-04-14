@@ -23,7 +23,6 @@ export const CalendarCol = ({ day, date }: Props) => {
         className="grid grid-cols-1 grid-rows-1 cursor-pointer"
       >
         <button
-          className="text-white text-lg w-60 h-14 py-2 px-4"
           onClick={() => setIsOpen(true)}
         >
           <div
