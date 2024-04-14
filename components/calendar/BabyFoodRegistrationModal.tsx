@@ -8,7 +8,7 @@ export type ModalProps = {
 const BabyFoodRegistrationModal = ({ open, clickOkToCloseTheModal }: ModalProps) => {
   return open ? (
     <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
-      <div className="rounded-md bg-white w-80 h-auto p-5 flex flex-col items-center">
+      <div className="rounded-md bg-white w-72 h-auto p-5 flex flex-col items-center border border-gray-300">
         <h1 className="text-gray-700 text-xl font-bold mb-5">Title</h1>
         <p className="text-gray-700 text-lg mb-5">Modal Message.</p>
         <div className="flex justify-center w-full">
