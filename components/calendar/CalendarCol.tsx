@@ -16,7 +16,7 @@ export const CalendarCol = ({ day, date }: Props) => {
     <>
       <BabyFoodRegistrationModal
         open={isOpen}
-        clickOkToCloseTheModal={() => setIsOpen(false)}
+        closeTheModal={() => setIsOpen(false)}
       />
 
       <div
