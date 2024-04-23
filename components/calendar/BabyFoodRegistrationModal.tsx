@@ -107,45 +107,34 @@ export default function BabyFoodRegistrationModal(props: Props) {
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-wrap -m-2"
           >
+
+            {/* Meal Category */}
             <div className="p-2 w-full">
               <div className="relative">
                 <label
-                  htmlFor="title"
+                  htmlFor="meal_category"
                   className="leading-7 text-sm text-gray-600"
                 >
-                  Title
+                  Meal Category
                 </label>
-                <input
-                  {...register("title", { required: true, maxLength: 60 })}
-                  type="text"
-                  id="title"
-                  name="title"
-                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                />
-                {errors.title &&
-                  "Title is required and should be less than 60 characters."}
+                <select
+                  {...register("meal_category", { required: true })}
+                  id="meal_category"
+                  name="meal_category"
+                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
+                >
+                  <option value="break_fast">主食</option>
+                  <option value="lunch">主菜</option>
+                  <option value="dinner">副菜</option>
+                  <option value="lunch">汁物</option>
+                  <option value="dinner">その他</option>
+                </select>
+                {errors.meal_category &&
+                  "Meal Category is required."}
               </div>
             </div>
 
-            <div className="p-2 w-full">
-              <div className="relative">
-                <label
-                  htmlFor="body"
-                  className="leading-7 text-sm text-gray-600"
-                >
-                  Body
-                </label>
-                <textarea
-                  {...register("body", { required: true, maxLength: 500 })}
-                  id="body"
-                  name="body"
-                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                ></textarea>
-                {errors.body &&
-                  "Body is required and should be less than 500 characters."}
-              </div>
-            </div>
-
+            {/* Meal Time */}
             <div className="p-2 w-full">
               <div className="relative">
                 <label
@@ -168,6 +157,48 @@ export default function BabyFoodRegistrationModal(props: Props) {
                   "Meal Time is required."}
               </div>
             </div>
+
+            {/* Title */}
+            <div className="p-2 w-full">
+              <div className="relative">
+                <label
+                  htmlFor="title"
+                  className="leading-7 text-sm text-gray-600"
+                >
+                  Title
+                </label>
+                <input
+                  {...register("title", { required: true, maxLength: 60 })}
+                  type="text"
+                  id="title"
+                  name="title"
+                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                />
+                {errors.title &&
+                  "Title is required and should be less than 60 characters."}
+              </div>
+            </div>
+
+            {/* Body */}
+            <div className="p-2 w-full">
+              <div className="relative">
+                <label
+                  htmlFor="body"
+                  className="leading-7 text-sm text-gray-600"
+                >
+                  Body
+                </label>
+                <textarea
+                  {...register("body", { required: true, maxLength: 500 })}
+                  id="body"
+                  name="body"
+                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                ></textarea>
+                {errors.body &&
+                  "Body is required and should be less than 500 characters."}
+              </div>
+            </div>
+
             <div className="p-2 w-full">
               <button
                 type="submit"

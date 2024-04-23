@@ -29,6 +29,7 @@ export interface BabyFoodInputs {
   body: string;
   meal_time: string;
   dish_name: string;
+  meal_category: string;
 }
 
 export interface BabyFoodData extends BabyFoodInputs {
