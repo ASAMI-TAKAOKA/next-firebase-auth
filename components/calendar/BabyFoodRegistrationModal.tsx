@@ -77,7 +77,8 @@ export default function BabyFoodRegistrationModal(props: Props) {
           boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
           backgroundColor: "white",
           padding: "20px",
-          margin: "20px"
+          marginTop: "50px",
+          marginBottom: "30px"
         }
       }}
     >
