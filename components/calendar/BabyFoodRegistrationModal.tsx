@@ -62,7 +62,7 @@ export default function BabyFoodRegistrationModal(props: Props) {
     }
   }
 
-  return (
+  return props.open ? (
     <Modal
       isOpen={props.open}
       onRequestClose={props.closeTheModal}
@@ -180,5 +180,5 @@ export default function BabyFoodRegistrationModal(props: Props) {
         </div>
       </div>
     </Modal>
-  );
+  ) : null;
 };
