@@ -202,9 +202,9 @@ export default function BabyFoodRegistrationModal(props: Props) {
             <div className="p-2 w-full">
               <button
                 type="submit"
-                className="flex mx-auto text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pink-600 rounded text-lg"
+                className="flex mx-auto text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pink-600 rounded text-md"
               >
-                登録する
+                こんだてを登録
               </button>
             </div>
           </form>
