@@ -25,11 +25,11 @@ export interface CommentData extends CommentInputs {
 }
 
 export interface BabyFoodInputs {
-  title: string;
-  body: string;
-  meal_time: string;
-  dish_name: string;
+  replace: any;
   meal_category: string;
+  dish_name: string;
+  meal_time: string;
+  url: string;
 }
 
 export interface BabyFoodData extends BabyFoodInputs {

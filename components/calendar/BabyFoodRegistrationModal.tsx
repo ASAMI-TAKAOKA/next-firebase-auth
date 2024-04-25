@@ -62,6 +62,17 @@ export default function BabyFoodRegistrationModal(props: Props) {
     }
   }
 
+  // いずれ使用する
+  const replaceAllUrlToAnchor = (url: BabyFoodInputs) => {
+    if (!url) {
+      return url;
+    }
+    return url.replace(
+      /(https?:\/\/[-_.!~*()[\]a-zA-Z0-9;?:&=+%#/]+)/g,
+      '<a href=\'$&\' target="_blank" rel="noopener noreferrer">$&</a>'
+    );
+  }
+
   return props.open ? (
     <Modal
       isOpen={props.open}
@@ -134,6 +145,27 @@ export default function BabyFoodRegistrationModal(props: Props) {
               </div>
             </div>
 
+            {/* Dish Name */}
+            <div className="p-2 w-full">
+              <div className="relative">
+                <label
+                  htmlFor="dish_name"
+                  className="leading-7 text-sm text-gray-600"
+                >
+                  Dish Name
+                </label>
+                <input
+                  {...register("dish_name", { required: true, maxLength: 60 })}
+                  type="text"
+                  id="dish_name"
+                  name="dish_name"
+                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                />
+                {errors.dish_name &&
+                  "Dish Name is required and should be less than 60 characters."}
+              </div>
+            </div>
+
             {/* Meal Time */}
             <div className="p-2 w-full">
               <div className="relative">
@@ -158,47 +190,26 @@ export default function BabyFoodRegistrationModal(props: Props) {
               </div>
             </div>
 
-            {/* Title */}
+            {/* URL(任意) */}
             <div className="p-2 w-full">
               <div className="relative">
                 <label
-                  htmlFor="title"
+                  htmlFor="url"
                   className="leading-7 text-sm text-gray-600"
                 >
-                  Title
+                  URL
                 </label>
                 <input
-                  {...register("title", { required: true, maxLength: 60 })}
-                  type="text"
-                  id="title"
-                  name="title"
-                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  {...register("url", { required: false })}
+                  type="url"
+                  id="url"
+                  name="url"
+                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
                 />
-                {errors.title &&
-                  "Title is required and should be less than 60 characters."}
               </div>
             </div>
 
-            {/* Body */}
-            <div className="p-2 w-full">
-              <div className="relative">
-                <label
-                  htmlFor="body"
-                  className="leading-7 text-sm text-gray-600"
-                >
-                  Body
-                </label>
-                <textarea
-                  {...register("body", { required: true, maxLength: 500 })}
-                  id="body"
-                  name="body"
-                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                ></textarea>
-                {errors.body &&
-                  "Body is required and should be less than 500 characters."}
-              </div>
-            </div>
-
+            {/* 登録ボタン */}
             <div className="p-2 w-full">
               <button
                 type="submit"
