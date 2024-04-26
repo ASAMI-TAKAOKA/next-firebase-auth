@@ -111,26 +111,60 @@ export default function BabyFoodRegistrationModal(props: Props) {
             {/* Meal Category */}
             <div className="p-2 w-full">
               <div className="relative">
-                <label
-                  htmlFor="meal_category"
-                  className="leading-7 text-sm text-gray-600"
-                >
-                  Meal Category
-                </label>
-                <select
-                  {...register("meal_category", { required: true })}
-                  id="meal_category"
-                  name="meal_category"
-                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
-                >
-                  <option value="break_fast">主食</option>
-                  <option value="lunch">主菜</option>
-                  <option value="dinner">副菜</option>
-                  <option value="lunch">汁物</option>
-                  <option value="dinner">その他</option>
-                </select>
+                <div>
+                  <label className="inline-flex items-center">
+                    <input
+                      {...register("meal_category", { required: true })}
+                      type="radio"
+                      value="break_fast"
+                      className="form-radio h-5 w-5 text-pink-600"
+                      onChange={(e) => console.log("ラジオボタンで選択した値:", e.target.value)}
+                    />
+                    <span className="ml-2">主食</span>
+                  </label>
+                  <label className="inline-flex items-center ml-6">
+                    <input
+                      {...register("meal_category", { required: true })}
+                      type="radio"
+                      value="lunch"
+                      className="form-radio h-5 w-5 text-pink-600"
+                      onChange={(e) => console.log("ラジオボタンで選択した値:", e.target.value)}
+                    />
+                    <span className="ml-2">主菜</span>
+                  </label>
+                  <label className="inline-flex items-center ml-6">
+                    <input
+                      {...register("meal_category", { required: true })}
+                      type="radio"
+                      value="dinner"
+                      className="form-radio h-5 w-5 text-pink-600"
+                      onChange={(e) => console.log("選択した:", e.target.value)}
+                    />
+                    <span className="ml-2">副菜</span>
+                  </label>
+                  <label className="inline-flex items-center ml-6">
+                    <input
+                      {...register("meal_category", { required: true })}
+                      type="radio"
+                      value="soup"
+                      className="form-radio h-5 w-5 text-pink-600"
+                      onChange={(e) => console.log("選択した値:", e.target.value)}
+                    />
+                    <span className="ml-2">汁物</span>
+                  </label>
+                  <label className="inline-flex items-center ml-6">
+                    <input
+                      {...register("meal_category", { required: true })}
+                      type="radio"
+                      value="other"
+                      className="form-radio h-5 w-5 text-pink-600"
+                      onChange={(e) => console.log("ラジオボタン選択した値:", e.target.value)}
+                    />
+                    <span className="ml-2">その他</span>
+                  </label>
+                </div>
                 {errors.meal_category &&
-                  "Meal Category is required."}
+                  <span className="text-red-500">Meal Category is required.</span>}
               </div>
             </div>
 
