@@ -62,17 +62,6 @@ export default function BabyFoodRegistrationModal(props: Props) {
     }
   }
 
-  // いずれ使用する
-  const replaceAllUrlToAnchor = (url: BabyFoodInputs) => {
-    if (!url) {
-      return url;
-    }
-    return url.replace(
-      /(https?:\/\/[-_.!~*()[\]a-zA-Z0-9;?:&=+%#/]+)/g,
-      '<a href=\'$&\' target="_blank" rel="noopener noreferrer">$&</a>'
-    );
-  }
-
   return props.open ? (
     <Modal
       isOpen={props.open}
@@ -205,6 +194,25 @@ export default function BabyFoodRegistrationModal(props: Props) {
                   id="url"
                   name="url"
                   className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
+                />
+              </div>
+            </div>
+
+            {/* Memo(任意) */}
+            <div className="p-2 w-full">
+              <div className="relative">
+                <label
+                  htmlFor="memo"
+                  className="leading-7 text-sm text-gray-600"
+                >
+                  メモ
+                </label>
+                <input
+                  {...register("memo", { required: false })}
+                  type="text"
+                  id="memo"
+                  name="memo"
+                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                 />
               </div>
             </div>
