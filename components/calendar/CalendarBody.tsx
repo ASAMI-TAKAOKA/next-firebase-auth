@@ -18,7 +18,7 @@ export const CalendarBody = ({calendarArray, month}: Props) => {
   }
 
   return (
-    <div className="grid grid-cols-7 grid-rows-5 justify-self-center">
+    <div className="grid grid-cols-7 grid-rows-5">
       {calendarArray?.map(
         (item) =>
           (displayMonth(item.date) === month && (

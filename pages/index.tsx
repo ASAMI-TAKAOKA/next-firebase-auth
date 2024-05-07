@@ -32,7 +32,7 @@ export default function HomePage({ posts }: Props) {
       </Head>
       <section>
         {/* 投稿記事一覧 */}
-        <Tabs className="container mx-auto py-8 px-3 mx-3 my-3">
+        <Tabs className="container mx-auto py-8 px-3">
           <TabList>
             <Tab>全ての投稿</Tab>
             <Tab>家事</Tab>
@@ -46,26 +46,26 @@ export default function HomePage({ posts }: Props) {
           {/* スマホとタブレットの場合、記事一覧のみ。離乳食登録カレンダーは非表示 */}
             {isMobileAndTablet && (
               <div>
-                  <TabPanel>
-                    {posts?.map((post) => (
+                <TabPanel>
+                  {posts?.map((post) => (
+                    <PostListItem key={post.id} post={post} />
+                  ))}
+                </TabPanel>
+                {/* カテゴリに合った記事だけを表示 */}
+                {["house_work", "money", "baby_food", "childbirth", "breastfeeding", "sleeping", "goods"].map((category, index) => (
+                  <TabPanel key={index}>
+                    {posts?.filter(post => post.category === category).map((post) => (
                       <PostListItem key={post.id} post={post} />
                     ))}
                   </TabPanel>
-                  {/* カテゴリに合った記事だけを表示 */}
-                  {["house_work", "money", "baby_food", "childbirth", "breastfeeding", "sleeping", "goods"].map((category, index) => (
-                    <TabPanel key={index}>
-                      {posts?.filter(post => post.category === category).map((post) => (
-                        <PostListItem key={post.id} post={post} />
-                      ))}
-                    </TabPanel>
-                  ))}
+                ))}
               </div>
               )}
           {/* スマホとタブレット以外(PC等)の場合、水平にアイテムを表示 */}
             {!isMobileAndTablet && (
-              <section className="container px-20 py-8 flex justify-between">
-                <div className="container py-3 px-16">
-                  <h2 className="text-center">投稿記事</h2>
+              <section className="container flex justify-between">
+                <div className="flex flex-col items-center">
+                  <h2>投稿記事</h2>
                     <TabPanel>
                       {posts?.map((post) => (
                         <PostListItem key={post.id} post={post} />
