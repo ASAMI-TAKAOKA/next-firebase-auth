@@ -1,6 +1,3 @@
-
-https://github.com/ASAMI-TAKAOKA/next-firebase-auth/assets/77926245/4a49ff43-feda-4c13-b08a-29cee74251f7
-
 # URL
 https://mom-and-baby-help.com/
 
