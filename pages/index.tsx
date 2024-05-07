@@ -80,9 +80,17 @@ export default function HomePage({ posts }: Props) {
                       </TabPanel>
                     ))}
                 </div>
+
+                <div className="flex flex-col items-center gap-1">
+                  <h2>一週間の献立</h2>
+                  {/* 週カレンダー */}
+                  <TitleHeaderSection year={year} month={month} />
+                  <CardSection calendarArray={calendarArray} month={month} />
+                </div>
+
                 <div className="flex flex-col items-center gap-1">
                   <h2>離乳食の献立を登録する</h2>
-                  {/* カレンダー */}
+                  {/* 月カレンダー */}
                   <TitleHeaderSection year={year} month={month} />
                   <CardSection calendarArray={calendarArray} month={month} />
                 </div>
