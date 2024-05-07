@@ -23,3 +23,17 @@ export interface CommentData extends CommentInputs {
   id: number;
   created_at: string;
 }
+
+export interface BabyFoodInputs {
+  meal_category: string;
+  dish_name: string;
+  meal_time: string;
+  url: string;
+  memo: string;
+}
+
+export interface BabyFoodData extends BabyFoodInputs {
+  id: number;
+  user_uid: string;
+  created_at: string;
+}

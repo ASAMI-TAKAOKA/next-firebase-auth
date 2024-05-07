@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
+// <Head>コンポーネントは、主にページのSEOやユーザー体験向上に役立つ
 import Head from "next/head";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
