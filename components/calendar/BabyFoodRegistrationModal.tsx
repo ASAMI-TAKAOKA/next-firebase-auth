@@ -69,7 +69,8 @@ export default function BabyFoodRegistrationModal(props: Props) {
       contentLabel="Baby Food Registration Modal"
       style={{
         overlay: {
-          backgroundColor: "rgba(0, 0, 0, 0.5)"
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          zIndex: 1000 // Set a higher z-index
         },
         content: {
           borderRadius: "12px",

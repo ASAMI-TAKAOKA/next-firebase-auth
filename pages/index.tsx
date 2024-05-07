@@ -5,14 +5,26 @@ import { PostData } from "types/types";
 import 'react-tabs/style/react-tabs.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import PostListItem from "components/posts/PostListItem";
-import { TitleHeaderSection } from 'components/calendar/TitleHeaderSection';
-import { CardSection } from 'components/calendar/CardSection';
 import { createCalendarArray } from "utils/createCalendarArray";
 import dayjs from 'dayjs';
 import { useMediaQuery } from 'react-responsive';
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import allLocales from '@fullcalendar/core/locales-all';
+import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
+import BabyFoodRegistrationModal from "components/calendar/BabyFoodRegistrationModal"
+import { useState } from 'react'
 
 type Props = {
   posts: PostData[];
+};
+
+const thisMonth = () => {
+  const today = new Date();
+  return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(
+    2,
+    "0"
+  )}`;
 };
 
 export default function HomePage({ posts }: Props) {
@@ -20,6 +32,7 @@ export default function HomePage({ posts }: Props) {
   const month = dayjs().format('M');
   const calendarArray = createCalendarArray(year, month);
   const isMobileAndTablet = useMediaQuery({ maxWidth: 1023 }); // xs and sm and md breakpoint
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
@@ -43,27 +56,51 @@ export default function HomePage({ posts }: Props) {
             <Tab>ねんね</Tab>
             <Tab >グッズ</Tab>
           </TabList>
-          {/* スマホとタブレットの場合、記事一覧のみ。離乳食登録カレンダーは非表示 */}
+          {/* スマホとタブレットは縦に表示*/}
             {isMobileAndTablet && (
-              <div>
-                <TabPanel>
-                  {posts?.map((post) => (
-                    <PostListItem key={post.id} post={post} />
-                  ))}
-                </TabPanel>
-                {/* カテゴリに合った記事だけを表示 */}
-                {["house_work", "money", "baby_food", "childbirth", "breastfeeding", "sleeping", "goods"].map((category, index) => (
-                  <TabPanel key={index}>
-                    {posts?.filter(post => post.category === category).map((post) => (
+              <section className="container mx-auto">
+                {/* 離乳食カレンダー */}
+                <div className="flex flex-col items-center gap-1">
+                  <BabyFoodRegistrationModal
+                    open={isOpen}
+                    closeTheModal={() => setIsOpen(false)}
+                  />
+
+                  <FullCalendar
+                    plugins={[dayGridPlugin, interactionPlugin]}
+                    initialView="dayGridMonth" // ここをMonth or Weekに変更するだけで切り替わる
+                    locales={allLocales}
+                    locale="ja"
+                    events={
+                      [{ title: "event 1", date: `${thisMonth()}-01` },
+                      { title: "event 2", date: `${thisMonth()}-02` }]
+                    }
+                    dateClick={() => setIsOpen(true)}
+                  />
+                </div>
+
+                <div className="flex flex-col items-center">
+                  <h2 className="mt-5">投稿記事</h2>
+                  <TabPanel>
+                    {posts?.map((post) => (
                       <PostListItem key={post.id} post={post} />
                     ))}
                   </TabPanel>
-                ))}
-              </div>
+                  {/* カテゴリに合った記事だけを表示 */}
+                  {["house_work", "money", "baby_food", "childbirth", "breastfeeding", "sleeping", "goods"].map((category, index) => (
+                    <TabPanel key={index}>
+                      {posts?.filter(post => post.category === category).map((post) => (
+                        <PostListItem key={post.id} post={post} />
+                      ))}
+                    </TabPanel>
+                  ))}
+                </div>
+              </section>
               )}
+
           {/* スマホとタブレット以外(PC等)の場合、水平にアイテムを表示 */}
             {!isMobileAndTablet && (
-              <section className="container flex justify-between">
+              <section className="container flex mx-auto">
                 <div className="flex flex-col items-center">
                   <h2>投稿記事</h2>
                     <TabPanel>
@@ -81,18 +118,24 @@ export default function HomePage({ posts }: Props) {
                     ))}
                 </div>
 
+                {/* 離乳食カレンダー */}
                 <div className="flex flex-col items-center gap-1">
-                  <h2>一週間の献立</h2>
-                  {/* 週カレンダー */}
-                  <TitleHeaderSection year={year} month={month} />
-                  <CardSection calendarArray={calendarArray} month={month} />
-                </div>
+                  <BabyFoodRegistrationModal
+                    open={isOpen}
+                    closeTheModal={() => setIsOpen(false)}
+                  />
 
-                <div className="flex flex-col items-center gap-1">
-                  <h2>離乳食の献立を登録する</h2>
-                  {/* 月カレンダー */}
-                  <TitleHeaderSection year={year} month={month} />
-                  <CardSection calendarArray={calendarArray} month={month} />
+                  <FullCalendar
+                    plugins={[dayGridPlugin, interactionPlugin]}
+                    initialView="dayGridMonth" // ここをMonth or Weekに変更するだけで切り替わる
+                    locales={allLocales}
+                    locale="ja"
+                    events={
+                      [{ title: "event 1", date: `${thisMonth()}-01` },
+                      { title: "event 2", date: `${thisMonth()}-02` }]
+                    }
+                    dateClick={() => setIsOpen(true)}
+                  />
                 </div>
               </section>
               )}
