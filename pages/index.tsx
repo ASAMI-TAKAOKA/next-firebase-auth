@@ -64,12 +64,6 @@ export default function HomePage({ posts }: Props) {
           {/* スマホとタブレット以外(PC等)の場合、水平にアイテムを表示 */}
             {!isMobileAndTablet && (
               <section className="container px-20 py-8 flex justify-between">
-                <div className="rounded-lg flex flex-col items-center gap-4">
-                  <h2>離乳食の献立を登録する</h2>
-                  {/* カレンダー */}
-                  <TitleHeaderSection year={year} month={month} />
-                  <CardSection calendarArray={calendarArray} month={month} />
-                </div>
                 <div className="container py-3 px-16">
                   <h2 className="text-center">投稿記事</h2>
                     <TabPanel>
@@ -85,6 +79,12 @@ export default function HomePage({ posts }: Props) {
                         ))}
                       </TabPanel>
                     ))}
+                </div>
+                <div className="flex flex-col items-center gap-1">
+                  <h2>離乳食の献立を登録する</h2>
+                  {/* カレンダー */}
+                  <TitleHeaderSection year={year} month={month} />
+                  <CardSection calendarArray={calendarArray} month={month} />
                 </div>
               </section>
               )}

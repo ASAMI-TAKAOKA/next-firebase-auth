@@ -25,15 +25,11 @@ export const CalendarCol = ({ day, date }: Props) => {
         <button
           onClick={() => setIsOpen(true)}
         >
-          <div
-            className="row-start-1 row-end-5 col-start-1 col-end-5 self-center justify-self-center w-10 h-10 flex justify-center items-center"
+          <span
+            className="text-lg text-gray-500"
           >
-            <span
-              className="text-lg text-gray-500 row-start-1 row-end-2 col-start-1 col-end-2 self-center justify-self-center"
-            >
-              {day}
+            {day}
             </span>
-          </div>
         </button>
       </div>
     </>
