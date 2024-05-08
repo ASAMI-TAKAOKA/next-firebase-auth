@@ -41,7 +41,7 @@ export default function BabyFoodRegistrationModal(props: Props) {
   async function createBabyFood(babyFoodInputData: BabyFoodInputs) {
     const config = await setConfig();
     // Add selectedDate as meal_date to babyFoodInputData
-    babyFoodInputData.meal_date = props.selectedDate;
+    babyFoodInputData.meal_date = props.selectedDate || "";;
 
     try {
       const response = await axios.post(
