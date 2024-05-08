@@ -38,9 +38,11 @@ export default function HomePage({ posts, babyFoods }: Props) {
 
   // FullCalendarのdateClickイベントハンドラー
   const handleDateClick = (arg: DateClickArg) => {
-    const isoDateString = arg.date.toISOString();
-  setSelectedDate(isoDateString);
-};
+    if (arg.date) {
+      const isoDateString = arg.date.toISOString();
+      setSelectedDate(isoDateString);
+    }
+  };
 
   // FullCalendarで使用するイベントオブジェクトの作成
   const calendarEvents = babyFoods.map((food) => ({
