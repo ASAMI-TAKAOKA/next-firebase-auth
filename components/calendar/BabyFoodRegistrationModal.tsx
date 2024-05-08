@@ -12,7 +12,7 @@ type Props = {
   open: boolean;
   closeTheModal: () => void;
   calendarEvents: { title: string; description: string; date: string; editable: boolean }[];
-  selectedDate: string;
+  selectedDate: string | null; // nullを許容するように修正
 };
 
 export default function BabyFoodRegistrationModal(props: Props) {
