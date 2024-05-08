@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { GetServerSideProps } from "next";
 import fetch from "node-fetch";
-import { PostData } from "types/types";
+import { PostData, BabyFoodData } from "types/types";
 import 'react-tabs/style/react-tabs.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import PostListItem from "components/posts/PostListItem";
@@ -17,6 +17,7 @@ import { useState } from 'react'
 
 type Props = {
   posts: PostData[];
+  babyFoods: BabyFoodData[];
 };
 
 const thisMonth = () => {
@@ -148,18 +149,29 @@ export default function HomePage({ posts }: Props) {
 export const getServerSideProps: GetServerSideProps<Props> = async (
   context
 ) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/posts/`);
+  const postRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/posts/`);
+  const babyFoodsRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/baby_foods/`);
 
   let posts: PostData[] = [];
+  let babyFoods: BabyFoodData[] = [];
 
-  if (res.ok) {
-    posts = (await res.json()) as PostData[];
+  if (postRes.ok) {
+    posts = (await postRes.json()) as PostData[];
+  }
+  if (babyFoodsRes.ok) {
+    babyFoods = (await babyFoodsRes.json()) as BabyFoodData[];
   }
 
-  res.headers.set(
+  postRes.headers.set(
     "Cache-Control",
     "public, s-maxage=10, stale-while-revalidate=59"
   );
 
-  return { props: { posts } };
+  babyFoodsRes.headers.set(
+    "Cache-Control",
+    "public, s-maxage=10, stale-while-revalidate=59"
+  );
+
+  return { props: { posts, babyFoods } };
 };
+
