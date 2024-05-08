@@ -30,6 +30,7 @@ export interface BabyFoodInputs {
   meal_time: string;
   url: string;
   memo: string;
+  meal_date: string;
 }
 
 export interface BabyFoodData extends BabyFoodInputs {

@@ -28,12 +28,29 @@ const thisMonth = () => {
   )}`;
 };
 
-export default function HomePage({ posts }: Props) {
+export default function HomePage({ posts, babyFoods }: Props) {
   const year = dayjs().format('YYYY');
   const month = dayjs().format('M');
   const calendarArray = createCalendarArray(year, month);
   const isMobileAndTablet = useMediaQuery({ maxWidth: 1023 }); // xs and sm and md breakpoint
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+
+  // FullCalendarのdateClickイベントハンドラー
+  const handleDateClick = (arg: DateClickArg) => {
+    const isoDateString = arg.date.toISOString();
+  setSelectedDate(isoDateString);
+};
+
+  // FullCalendarで使用するイベントオブジェクトの作成
+  const calendarEvents = babyFoods.map((food) => ({
+    title: food.meal_time,
+    description: food.dish_name,
+    date: food.meal_date,
+    backgroundColor: "red",
+    borderColor: "red",
+    editable: true
+  }));
 
   return (
     <>
@@ -65,6 +82,8 @@ export default function HomePage({ posts }: Props) {
                   <BabyFoodRegistrationModal
                     open={isOpen}
                     closeTheModal={() => setIsOpen(false)}
+                    calendarEvents={calendarEvents} // calendarEventsをpropsで渡す
+                    selectedDate={selectedDate}
                   />
 
                   <FullCalendar
@@ -72,11 +91,11 @@ export default function HomePage({ posts }: Props) {
                     initialView="dayGridMonth" // ここをMonth or Weekに変更するだけで切り替わる
                     locales={allLocales}
                     locale="ja"
-                    events={
-                      [{ title: "event 1", date: `${thisMonth()}-01` },
-                      { title: "event 2", date: `${thisMonth()}-02` }]
-                    }
-                    dateClick={() => setIsOpen(true)}
+                    events={calendarEvents}
+                    dateClick={(arg: DateClickArg) => {
+                      setIsOpen(true);
+                      handleDateClick(arg);
+                    }}
                   />
                 </div>
 
@@ -124,6 +143,8 @@ export default function HomePage({ posts }: Props) {
                   <BabyFoodRegistrationModal
                     open={isOpen}
                     closeTheModal={() => setIsOpen(false)}
+                    calendarEvents={calendarEvents} // calendarEventsをpropsで渡す
+                    selectedDate={selectedDate}
                   />
 
                   <FullCalendar
@@ -131,11 +152,11 @@ export default function HomePage({ posts }: Props) {
                     initialView="dayGridMonth" // ここをMonth or Weekに変更するだけで切り替わる
                     locales={allLocales}
                     locale="ja"
-                    events={
-                      [{ title: "event 1", date: `${thisMonth()}-01` },
-                      { title: "event 2", date: `${thisMonth()}-02` }]
-                    }
-                    dateClick={() => setIsOpen(true)}
+                    events={calendarEvents}
+                    dateClick={(arg: DateClickArg) => {
+                      setIsOpen(true);
+                      handleDateClick(arg);
+                    }}
                   />
                 </div>
               </section>

@@ -11,6 +11,8 @@ import Modal from 'react-modal';
 type Props = {
   open: boolean;
   closeTheModal: () => void;
+  calendarEvents: { title: string; description: string; date: string; editable: boolean }[];
+  selectedDate: string;
 };
 
 export default function BabyFoodRegistrationModal(props: Props) {
@@ -38,6 +40,8 @@ export default function BabyFoodRegistrationModal(props: Props) {
 
   async function createBabyFood(babyFoodInputData: BabyFoodInputs) {
     const config = await setConfig();
+    // Add selectedDate as meal_date to babyFoodInputData
+    babyFoodInputData.meal_date = props.selectedDate;
 
     try {
       const response = await axios.post(
