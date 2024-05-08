@@ -11,6 +11,8 @@ import Modal from 'react-modal';
 type Props = {
   open: boolean;
   closeTheModal: () => void;
+  calendarEvents: { title: string; description: string; date: string; editable: boolean }[];
+  selectedDate: string | null; // nullを許容するように修正
 };
 
 export default function BabyFoodRegistrationModal(props: Props) {
@@ -38,6 +40,8 @@ export default function BabyFoodRegistrationModal(props: Props) {
 
   async function createBabyFood(babyFoodInputData: BabyFoodInputs) {
     const config = await setConfig();
+    // Add selectedDate as meal_date to babyFoodInputData
+    babyFoodInputData.meal_date = props.selectedDate || "";;
 
     try {
       const response = await axios.post(
@@ -69,7 +73,8 @@ export default function BabyFoodRegistrationModal(props: Props) {
       contentLabel="Baby Food Registration Modal"
       style={{
         overlay: {
-          backgroundColor: "rgba(0, 0, 0, 0.5)"
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          zIndex: 1000 // Set a higher z-index
         },
         content: {
           borderRadius: "12px",
