@@ -20,14 +20,6 @@ type Props = {
   babyFoods: BabyFoodData[];
 };
 
-const thisMonth = () => {
-  const today = new Date();
-  return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(
-    2,
-    "0"
-  )}`;
-};
-
 export default function HomePage({ posts, babyFoods }: Props) {
   const year = dayjs().format('YYYY');
   const month = dayjs().format('M');
@@ -39,19 +31,22 @@ export default function HomePage({ posts, babyFoods }: Props) {
   // FullCalendarのdateClickイベントハンドラー
   const handleDateClick = (arg: DateClickArg) => {
     if (arg.date) {
-      const isoDateString = arg.date.toISOString();
+      const year = arg.date.getFullYear();
+      const month = arg.date.getMonth() + 1;
+      const day = arg.date.getDate();
+      const isoDateString = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
       setSelectedDate(isoDateString);
     }
   };
 
   // FullCalendarで使用するイベントオブジェクトの作成
   const calendarEvents = babyFoods.map((food) => ({
-    title: food.meal_time,
-    description: food.dish_name,
+    title: food.dish_name,
+    description: food.meal_time,
     date: food.meal_date,
     backgroundColor: "red",
     borderColor: "red",
-    editable: true
+    editable: false
   }));
 
   return (
@@ -122,26 +117,30 @@ export default function HomePage({ posts, babyFoods }: Props) {
 
           {/* スマホとタブレット以外(PC等)の場合、水平にアイテムを表示 */}
             {!isMobileAndTablet && (
-              <section className="container flex mx-auto">
-                <div className="flex flex-col items-center">
-                  <h2>投稿記事</h2>
-                    <TabPanel>
-                      {posts?.map((post) => (
+              <section className="container flex">
+              <div className="w-1/2 pr-2">
+                {/* 投稿記事一覧 */}
+                <div>
+                  <h2 className="text-center">投稿記事</h2>
+                  <TabPanel>
+                    {posts?.map((post) => (
+                      <PostListItem key={post.id} post={post} />
+                    ))}
+                  </TabPanel>
+                  {/* カテゴリに合った記事だけを表示 */}
+                  {["house_work", "money", "baby_food", "childbirth", "breastfeeding", "sleeping", "goods"].map((category, index) => (
+                    <TabPanel key={index}>
+                      {posts?.filter(post => post.category === category).map((post) => (
                         <PostListItem key={post.id} post={post} />
                       ))}
                     </TabPanel>
-                    {/* カテゴリに合った記事だけを表示 */}
-                    {["house_work", "money", "baby_food", "childbirth", "breastfeeding", "sleeping", "goods"].map((category, index) => (
-                      <TabPanel key={index}>
-                        {posts?.filter(post => post.category === category).map((post) => (
-                          <PostListItem key={post.id} post={post} />
-                        ))}
-                      </TabPanel>
-                    ))}
+                  ))}
                 </div>
+              </div>
 
+              <div className="w-1/2 pl-2">
                 {/* 離乳食カレンダー */}
-                <div className="flex flex-col items-center gap-1">
+                <div className="">
                   <BabyFoodRegistrationModal
                     open={isOpen}
                     closeTheModal={() => setIsOpen(false)}
@@ -161,7 +160,8 @@ export default function HomePage({ posts, babyFoods }: Props) {
                     }}
                   />
                 </div>
-              </section>
+              </div>
+            </section>
               )}
         </Tabs>
       </section>
