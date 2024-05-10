@@ -12,6 +12,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import allLocales from '@fullcalendar/core/locales-all';
 import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
+import { EventClickArg } from "@fullcalendar/core";
 import BabyFoodRegistrationModal from "components/calendar/BabyFoodRegistrationModal"
 import { useState } from 'react'
 
@@ -28,7 +29,6 @@ export default function HomePage({ posts, babyFoods }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
-  // FullCalendarのdateClickイベントハンドラー
   const handleDateClick = (arg: DateClickArg) => {
     if (arg.date) {
       const year = arg.date.getFullYear();
@@ -39,7 +39,16 @@ export default function HomePage({ posts, babyFoods }: Props) {
     }
   };
 
-  // FullCalendarで使用するイベントオブジェクトの作成
+  const handleEventClick = (arg: EventClickArg) => {
+    if (arg.event) {
+      const clickedDate = dayjs(arg.event.startStr).format('YYYY-MM-DD'); // クリックしたイベントの日付
+      const clickedEvent = calendarEvents.find(event => event.date === clickedDate && event.title === arg.event.title); // calendarEventsのdateとclickedDateが同じ かつ calendarEventsのtitleとクリックしたtitleが同じデータを、clickedEventとする
+      if (clickedEvent) {
+        alert(JSON.stringify(clickedEvent));
+      }
+    }
+  };
+
   const calendarEvents = babyFoods.map((food) => ({
     title: food.dish_name,
     description: food.meal_time,
@@ -89,6 +98,7 @@ export default function HomePage({ posts, babyFoods }: Props) {
                     locales={allLocales}
                     locale="ja"
                     events={calendarEvents}
+                    eventClick={handleEventClick}
                     dateClick={(arg: DateClickArg) => {
                       setIsOpen(true);
                       handleDateClick(arg);
@@ -118,7 +128,7 @@ export default function HomePage({ posts, babyFoods }: Props) {
           {/* スマホとタブレット以外(PC等)の場合、水平にアイテムを表示 */}
             {!isMobileAndTablet && (
               <section className="container flex">
-              <div className="w-1/2 pr-2">
+              <div className="w-1/3">
                 {/* 投稿記事一覧 */}
                 <div>
                   <h2 className="text-center">投稿記事</h2>
@@ -138,7 +148,7 @@ export default function HomePage({ posts, babyFoods }: Props) {
                 </div>
               </div>
 
-              <div className="w-1/2 pl-2">
+              <div className="w-2/3">
                 {/* 離乳食カレンダー */}
                 <div className="">
                   <BabyFoodRegistrationModal
@@ -154,6 +164,7 @@ export default function HomePage({ posts, babyFoods }: Props) {
                     locales={allLocales}
                     locale="ja"
                     events={calendarEvents}
+                    eventClick={handleEventClick}
                     dateClick={(arg: DateClickArg) => {
                       setIsOpen(true);
                       handleDateClick(arg);
