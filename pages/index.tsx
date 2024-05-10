@@ -44,7 +44,7 @@ export default function HomePage({ posts, babyFoods }: Props) {
       const clickedDate = dayjs(arg.event.startStr).format('YYYY-MM-DD'); // クリックしたイベントの日付
       const clickedEvent = calendarEvents.find(event => event.date === clickedDate && event.title === arg.event.title); // calendarEventsのdateとclickedDateが同じ かつ calendarEventsのtitleとクリックしたtitleが同じデータを、clickedEventとする
       if (clickedEvent) {
-        alert(JSON.stringify(clickedEvent));
+        alert(`料理名: ${clickedEvent.title}\n朝食 or 昼食 or 夕食: ${clickedEvent.description}\n日にち: ${clickedEvent.date}`);
       }
     }
   };
