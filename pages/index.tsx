@@ -15,6 +15,7 @@ import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
 import { EventClickArg } from "@fullcalendar/core";
 import BabyFoodRegistrationModal from "components/calendar/BabyFoodRegistrationModal"
 import { useState } from 'react'
+import { useAuthContext } from 'context/AuthContext';
 
 type Props = {
   posts: PostData[];
@@ -28,6 +29,7 @@ export default function HomePage({ posts, babyFoods }: Props) {
   const isMobileAndTablet = useMediaQuery({ maxWidth: 1023 }); // xs and sm and md breakpoint
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const { currentUser } = useAuthContext();
 
   const handleDateClick = (arg: DateClickArg) => {
     if (arg.date) {
@@ -80,8 +82,8 @@ export default function HomePage({ posts, babyFoods }: Props) {
             <Tab>ねんね</Tab>
             <Tab >グッズ</Tab>
           </TabList>
-          {/* スマホとタブレットは縦に表示*/}
-            {isMobileAndTablet && (
+          {/* スマホとタブレットかつログイン済みの場合、縦に表示*/}
+            {isMobileAndTablet && currentUser && (
               <section className="container mx-auto">
                 {/* 離乳食カレンダー */}
                 <div className="flex flex-col items-center gap-1">
@@ -123,10 +125,10 @@ export default function HomePage({ posts, babyFoods }: Props) {
                   ))}
                 </div>
               </section>
-              )}
+            )}
 
-          {/* スマホとタブレット以外(PC等)の場合、水平にアイテムを表示 */}
-            {!isMobileAndTablet && (
+          {/* スマホとタブレット以外(PC等)かつログイン済みの場合、水平にアイテムを表示 */}
+            {!isMobileAndTablet && currentUser && (
               <section className="container flex">
               <div className="w-1/3">
                 {/* 投稿記事一覧 */}
@@ -173,7 +175,7 @@ export default function HomePage({ posts, babyFoods }: Props) {
                 </div>
               </div>
             </section>
-              )}
+          )}
         </Tabs>
       </section>
     </>
