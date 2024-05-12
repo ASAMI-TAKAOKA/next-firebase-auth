@@ -99,6 +99,7 @@ export default function HomePage({ posts, babyFoods }: Props) {
                     selectedDate={selectedDate}
                   />
 
+                  <h2 className="text-center">離乳食カレンダー</h2>
                   <FullCalendar
                     plugins={[dayGridPlugin, interactionPlugin]}
                     initialView="dayGridMonth" // ここをMonth or Weekに変更するだけで切り替わる
@@ -165,6 +166,7 @@ export default function HomePage({ posts, babyFoods }: Props) {
                     selectedDate={selectedDate}
                   />
 
+                  <h2 className="text-center">離乳食カレンダー</h2>
                   <FullCalendar
                     plugins={[dayGridPlugin, interactionPlugin]}
                     initialView="dayGridMonth" // ここをMonth or Weekに変更するだけで切り替わる
