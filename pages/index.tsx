@@ -55,8 +55,8 @@ export default function HomePage({ posts, babyFoods }: Props) {
     title: food.dish_name,
     description: food.meal_time,
     date: food.meal_date,
-    backgroundColor: "red",
-    borderColor: "red",
+    backgroundColor: "#FF99FF	",
+    borderColor: "#FF99FF",
     editable: false
   }));
 
