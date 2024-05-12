@@ -19,9 +19,6 @@
 # URL
 https://mom-and-baby-help.com/
 
-# メイン機能の使い方
-
-
 # 使用技術・環境
 - フロントエンド
   - TypeScript 5.2.2
