@@ -75,12 +75,17 @@ export default function HomePage({ posts, babyFoods }: Props) {
           <TabList>
             <Tab>全ての投稿</Tab>
             <Tab>家事</Tab>
+            <Tab>仕事</Tab>
             <Tab>お金</Tab>
+            <Tab>人間関係</Tab>
+            <Tab>お出かけ</Tab>
+            <Tab>健康</Tab>
+            <Tab>発達</Tab>
             <Tab>離乳食</Tab>
             <Tab>出産</Tab>
             <Tab>授乳</Tab>
             <Tab>ねんね</Tab>
-            <Tab >グッズ</Tab>
+            <Tab>グッズ</Tab>
           </TabList>
           {/* スマホとタブレットかつログイン済みの場合、縦に表示*/}
             {isMobileAndTablet && currentUser && (
@@ -116,7 +121,7 @@ export default function HomePage({ posts, babyFoods }: Props) {
                     ))}
                   </TabPanel>
                   {/* カテゴリに合った記事だけを表示 */}
-                  {["house_work", "money", "baby_food", "childbirth", "breastfeeding", "sleeping", "goods"].map((category, index) => (
+                  {["house_work", "work", "money", "human_relations", "outing_with_baby", "health", "developmental", "baby_food", "childbirth", "breastfeeding", "sleeping", "goods"].map((category, index) => (
                     <TabPanel key={index}>
                       {posts?.filter(post => post.category === category).map((post) => (
                         <PostListItem key={post.id} post={post} />
@@ -140,7 +145,7 @@ export default function HomePage({ posts, babyFoods }: Props) {
                     ))}
                   </TabPanel>
                   {/* カテゴリに合った記事だけを表示 */}
-                  {["house_work", "money", "baby_food", "childbirth", "breastfeeding", "sleeping", "goods"].map((category, index) => (
+                  {["house_work", "work", "money", "human_relations", "outing_with_baby", "health", "developmental", "baby_food", "childbirth", "breastfeeding", "sleeping", "goods"].map((category, index) => (
                     <TabPanel key={index}>
                       {posts?.filter(post => post.category === category).map((post) => (
                         <PostListItem key={post.id} post={post} />

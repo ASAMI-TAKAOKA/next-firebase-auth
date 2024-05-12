@@ -168,7 +168,12 @@ export default function PostForm(props: Props) {
                   className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
                 >
                   <option value="house_work">家事</option>
+                  <option value="work">仕事</option>
                   <option value="money">お金</option>
+                  <option value="human_relations">人間関係</option>
+                  <option value="outing_with_baby">お出かけ</option>
+                  <option value="health">健康</option>
+                  <option value="developmental">発達</option>
                   <option value="baby_food">離乳食</option>
                   <option value="childbirth">出産</option>
                   <option value="breastfeeding">授乳</option>
