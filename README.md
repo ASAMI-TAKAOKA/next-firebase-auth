@@ -1,6 +1,7 @@
 # Mom and Baby Help
 
-![スクリーンショット 2024-05-12 17 58 53](https://github.com/ASAMI-TAKAOKA/next-firebase-auth/assets/77926245/a02c73f2-d1eb-4f06-acf0-24a1d10ae9e0)
+![スクリーンショット 2024-05-12 23 38 00](https://github.com/ASAMI-TAKAOKA/next-firebase-auth/assets/77926245/209c040f-bb2f-4c32-8eb3-403b60af3103)
+
 
 
 # サービス概要
@@ -55,12 +56,6 @@ https://mom-and-baby-help.com/
 - バージョン管理
   - Git/GitHub
 
- 
-# ER図
-<div align="center">
-<img width="1014" alt="ER" src="https://user-images.githubusercontent.com/77926245/126564786-432d0b39-66f7-4632-b7e9-5afa67e4d26f.png">
-</div>
-
 # 機能
 - Googleアカウントを利用したユーザーログイン機能
 - 投稿記事のデータ取得 / 作成 / 更新 / 削除機能
@@ -73,6 +68,9 @@ https://mom-and-baby-help.com/
 モーダル画面
 レスポンシブデザイン
 シンプルなUI/UXデザイン
+
+# ER図
+<img src="https://github.com/ASAMI-TAKAOKA/next-firebase-auth/assets/77926245/d1ecbb8b-7aaa-44b1-b079-8a23c0a24d7f" width="50%" />
 
 # 今後の実装予定
 - 離乳食のメニューごとの集計機能の完成
