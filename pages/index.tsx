@@ -53,7 +53,7 @@ export default function HomePage({ posts, babyFoods }: Props) {
 
   const calendarEvents = babyFoods
   .sort((a, b) => {
-    const mealOrder: Record<string, number> = { "1break_fast": 0, "2lunch": 1, "3dinner": 2 };
+    const mealOrder: Record<string, number> = { "break_fast": 0, "lunch": 1, "dinner": 2 };
     return mealOrder[a.meal_time] - mealOrder[b.meal_time];
   })
   .map((food) => ({
