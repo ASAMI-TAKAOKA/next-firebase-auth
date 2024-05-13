@@ -51,11 +51,16 @@ export default function HomePage({ posts, babyFoods }: Props) {
     }
   };
 
-  const calendarEvents = babyFoods.map((food) => ({
+  const calendarEvents = babyFoods
+  .sort((a, b) => {
+    const mealOrder: Record<string, number> = { "1break_fast": 0, "2lunch": 1, "3dinner": 2 };
+    return mealOrder[a.meal_time] - mealOrder[b.meal_time];
+  })
+  .map((food) => ({
     title: food.dish_name,
     description: food.meal_time,
     date: food.meal_date,
-    backgroundColor: "#FF99FF	",
+    backgroundColor: "#FF99FF",
     borderColor: "#FF99FF",
     editable: false
   }));

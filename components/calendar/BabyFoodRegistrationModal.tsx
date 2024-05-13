@@ -121,7 +121,7 @@ export default function BabyFoodRegistrationModal(props: Props) {
                     <input
                       {...register("meal_category", { required: true })}
                       type="radio"
-                      value="break_fast"
+                      value="1break_fast"
                       className="form-radio h-5 w-5 text-pink-600"
                       onChange={(e) => console.log("ラジオボタンで選択した値:", e.target.value)}
                     />
@@ -131,7 +131,7 @@ export default function BabyFoodRegistrationModal(props: Props) {
                     <input
                       {...register("meal_category", { required: true })}
                       type="radio"
-                      value="lunch"
+                      value="2lunch"
                       className="form-radio h-5 w-5 text-pink-600"
                       onChange={(e) => console.log("ラジオボタンで選択した値:", e.target.value)}
                     />
@@ -141,7 +141,7 @@ export default function BabyFoodRegistrationModal(props: Props) {
                     <input
                       {...register("meal_category", { required: true })}
                       type="radio"
-                      value="dinner"
+                      value="3dinner"
                       className="form-radio h-5 w-5 text-pink-600"
                       onChange={(e) => console.log("選択した:", e.target.value)}
                     />
@@ -209,9 +209,9 @@ export default function BabyFoodRegistrationModal(props: Props) {
                   name="meal_time"
                   className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
                 >
-                  <option value="break_fast">朝食</option>
-                  <option value="lunch">昼食</option>
-                  <option value="dinner">夕食</option>
+                  <option value="1break_fast">朝食</option>
+                  <option value="2lunch">昼食</option>
+                  <option value="3dinner">夕食</option>
                 </select>
                 {errors.meal_time &&
                   "Meal Time is required."}
