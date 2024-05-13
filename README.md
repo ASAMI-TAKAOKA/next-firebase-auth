@@ -61,10 +61,10 @@ https://mom-and-baby-help.com/
 - 離乳食のメニューごとの集計機能
 
 # 画面
-トースト表示
-モーダル画面
-レスポンシブデザイン
-シンプルなUI/UXデザイン
+トースト表示  
+モーダル画面  
+レスポンシブデザイン  
+シンプルなUI/UXデザイン  
 
 # ER図
 <img src="https://github.com/ASAMI-TAKAOKA/next-firebase-auth/assets/77926245/d1ecbb8b-7aaa-44b1-b079-8a23c0a24d7f" width="50%" />
