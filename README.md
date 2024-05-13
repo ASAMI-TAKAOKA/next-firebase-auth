@@ -28,6 +28,7 @@ https://mom-and-baby-help.com/
   - ESLint 8.53.0
 
 - バックエンド
+  - [バックエンドのGithub リポジトリはこちら](https://github.com/ASAMI-TAKAOKA/rails-firebase-auth)
   - Rails 7.1.1
   - Ruby 3.1.4
 
@@ -72,7 +73,6 @@ https://mom-and-baby-help.com/
 # 今後の実装予定
 - 離乳食のメニューごとの集計機能の完成
 - 検索フォームの追加
-- 記事のカテゴリ追加
 - 離乳食カレンダーの日付表示時のアラートにURLやメモも表示させたい
 
 
