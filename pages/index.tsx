@@ -16,6 +16,7 @@ import { EventClickArg } from "@fullcalendar/core";
 import BabyFoodRegistrationModal from "components/calendar/BabyFoodRegistrationModal"
 import { useState } from 'react'
 import { useAuthContext } from 'context/AuthContext';
+import BabyFoodUpdateModal from "components/calendar/BabyFoodUpdateModal";
 
 type Props = {
   posts: PostData[];
@@ -27,7 +28,7 @@ export default function HomePage({ posts, babyFoods }: Props) {
   const month = dayjs().format('M');
   const calendarArray = createCalendarArray(year, month);
   const isMobileAndTablet = useMediaQuery({ maxWidth: 1023 }); // xs and sm and md breakpoint
-  const [isOpen, setIsOpen] = useState(false);
+  const [babyFoodRegistrationModalIsOpen, setBabyFoodRegistrationModalIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const { currentUser } = useAuthContext();
 
@@ -98,8 +99,8 @@ export default function HomePage({ posts, babyFoods }: Props) {
                 {/* 離乳食カレンダー */}
                 <div className="flex flex-col items-center gap-1">
                   <BabyFoodRegistrationModal
-                    open={isOpen}
-                    closeTheModal={() => setIsOpen(false)}
+                    open={babyFoodRegistrationModalIsOpen}
+                    closeTheModal={() => setBabyFoodRegistrationModalIsOpen(false)}
                     calendarEvents={calendarEvents} // calendarEventsをpropsで渡す
                     selectedDate={selectedDate}
                   />
@@ -113,7 +114,7 @@ export default function HomePage({ posts, babyFoods }: Props) {
                     events={calendarEvents}
                     eventClick={handleEventClick}
                     dateClick={(arg: DateClickArg) => {
-                      setIsOpen(true);
+                      setBabyFoodRegistrationModalIsOpen(true);
                       handleDateClick(arg);
                     }}
                   />
@@ -165,8 +166,8 @@ export default function HomePage({ posts, babyFoods }: Props) {
                 {/* 離乳食カレンダー */}
                 <div className="">
                   <BabyFoodRegistrationModal
-                    open={isOpen}
-                    closeTheModal={() => setIsOpen(false)}
+                    open={babyFoodRegistrationModalIsOpen}
+                    closeTheModal={() => setBabyFoodRegistrationModalIsOpen(false)}
                     calendarEvents={calendarEvents} // calendarEventsをpropsで渡す
                     selectedDate={selectedDate}
                   />
@@ -180,7 +181,7 @@ export default function HomePage({ posts, babyFoods }: Props) {
                     events={calendarEvents}
                     eventClick={handleEventClick}
                     dateClick={(arg: DateClickArg) => {
-                      setIsOpen(true);
+                      setBabyFoodRegistrationModalIsOpen(true);
                       handleDateClick(arg);
                     }}
                   />
