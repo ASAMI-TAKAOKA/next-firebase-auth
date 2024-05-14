@@ -29,7 +29,9 @@ export default function HomePage({ posts, babyFoods }: Props) {
   const calendarArray = createCalendarArray(year, month);
   const isMobileAndTablet = useMediaQuery({ maxWidth: 1023 }); // xs and sm and md breakpoint
   const [babyFoodRegistrationModalIsOpen, setBabyFoodRegistrationModalIsOpen] = useState(false);
+  const [babyFoodUpdateModalIsOpen, setBabyFoodUpdateModalIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<{ title: string; description: string; date: string } | null>(null);
   const { currentUser } = useAuthContext();
 
   const handleDateClick = (arg: DateClickArg) => {
@@ -47,7 +49,8 @@ export default function HomePage({ posts, babyFoods }: Props) {
       const clickedDate = dayjs(arg.event.startStr).format('YYYY-MM-DD'); // クリックしたイベントの日付
       const clickedEvent = calendarEvents.find(event => event.date === clickedDate && event.title === arg.event.title); // calendarEventsのdateとclickedDateが同じ かつ calendarEventsのtitleとクリックしたtitleが同じデータを、clickedEventとする
       if (clickedEvent) {
-        alert(`料理名: ${clickedEvent.title}\n朝食 or 昼食 or 夕食: ${clickedEvent.description}\n日にち: ${clickedEvent.date}`);
+        setSelectedEvent(clickedEvent);
+        setBabyFoodUpdateModalIsOpen(true);
       }
     }
   };
@@ -65,6 +68,16 @@ export default function HomePage({ posts, babyFoods }: Props) {
     borderColor: "#FF99FF",
     editable: false
   }));
+
+  const closeBabyFoodRegistrationModal = () => {
+    setBabyFoodRegistrationModalIsOpen(false);
+    setSelectedDate(null);
+  };
+
+  const closeBabyFoodUpdateModal = () => {
+    setBabyFoodUpdateModalIsOpen(false);
+    setSelectedEvent(null);
+  };
 
   return (
     <>
@@ -98,12 +111,22 @@ export default function HomePage({ posts, babyFoods }: Props) {
               <section className="container mx-auto">
                 {/* 離乳食カレンダー */}
                 <div className="flex flex-col items-center gap-1">
-                  <BabyFoodRegistrationModal
-                    open={babyFoodRegistrationModalIsOpen}
-                    closeTheModal={() => setBabyFoodRegistrationModalIsOpen(false)}
-                    calendarEvents={calendarEvents} // calendarEventsをpropsで渡す
-                    selectedDate={selectedDate}
-                  />
+                  {/* 登録モーダル */}
+                  {selectedDate && (
+                    <BabyFoodRegistrationModal
+                      open={babyFoodRegistrationModalIsOpen}
+                      closeTheModal={closeBabyFoodRegistrationModal}
+                      selectedDate={selectedDate}
+                    />
+                  )}
+                  {/* 更新モーダル */}
+                  {selectedEvent && (
+                    <BabyFoodUpdateModal
+                      open={babyFoodUpdateModalIsOpen}
+                      closeTheModal={closeBabyFoodUpdateModal}
+                      selectedEvent={selectedEvent}
+                    />
+                  )}
 
                   <h2 className="text-center">離乳食カレンダー</h2>
                   <FullCalendar
@@ -165,12 +188,22 @@ export default function HomePage({ posts, babyFoods }: Props) {
               <div className="w-2/3">
                 {/* 離乳食カレンダー */}
                 <div className="">
-                  <BabyFoodRegistrationModal
-                    open={babyFoodRegistrationModalIsOpen}
-                    closeTheModal={() => setBabyFoodRegistrationModalIsOpen(false)}
-                    calendarEvents={calendarEvents} // calendarEventsをpropsで渡す
-                    selectedDate={selectedDate}
-                  />
+                  {/* 登録モーダル */}
+                  {selectedDate && (
+                    <BabyFoodRegistrationModal
+                      open={babyFoodRegistrationModalIsOpen}
+                      closeTheModal={closeBabyFoodRegistrationModal}
+                      selectedDate={selectedDate}
+                    />
+                  )}
+                  {/* 更新モーダル */}
+                  {selectedEvent && (
+                    <BabyFoodUpdateModal
+                      open={babyFoodUpdateModalIsOpen}
+                      closeTheModal={closeBabyFoodUpdateModal}
+                      selectedEvent={selectedEvent}
+                    />
+                  )}
 
                   <h2 className="text-center">離乳食カレンダー</h2>
                   <FullCalendar

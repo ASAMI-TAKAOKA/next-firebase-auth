@@ -11,7 +11,6 @@ import Modal from 'react-modal';
 type Props = {
   open: boolean;
   closeTheModal: () => void;
-  calendarEvents: { title: string; description: string; date: string; editable: boolean }[];
   selectedDate: string | null; // nullを許容するように修正
 };
 

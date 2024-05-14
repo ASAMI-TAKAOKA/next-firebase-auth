@@ -11,8 +11,7 @@ import Modal from 'react-modal';
 type Props = {
   open: boolean;
   closeTheModal: () => void;
-  calendarEvents: { title: string; description: string; date: string; editable: boolean }[];
-  selectedDate: string | null; // nullを許容するように修正
+  selectedEvent: { title: string; description: string; date: string;};
 };
 
 export default function BabyFoodUpdateModal(props: Props) {
@@ -40,8 +39,6 @@ export default function BabyFoodUpdateModal(props: Props) {
 
   async function createBabyFood(babyFoodInputData: BabyFoodInputs) {
     const config = await setConfig();
-    // Add selectedDate as meal_date to babyFoodInputData
-    babyFoodInputData.meal_date = props.selectedDate || "";;
 
     try {
       const response = await axios.put(
@@ -188,7 +185,7 @@ export default function BabyFoodUpdateModal(props: Props) {
                   id="dish_name"
                   name="dish_name"
                   className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                  value={props.calendarEvents[0]?.title ?? ""}
+                  value={props.selectedEvent.title}
                 />
                 {errors.dish_name &&
                   "Dish Name is required and should be less than 60 characters."}
@@ -209,7 +206,7 @@ export default function BabyFoodUpdateModal(props: Props) {
                   id="meal_time"
                   name="meal_time"
                   className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
-                  value={props.calendarEvents[0]?.description ?? ""}
+                  value={props.selectedEvent.description}
                 >
                   <option value="break_fast">朝食</option>
                   <option value="lunch">昼食</option>
