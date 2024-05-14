@@ -25,7 +25,7 @@ export default function BabyFoodUpdateModal(props: Props) {
   } = useForm<BabyFoodInputs>();
 
   const onSubmit: SubmitHandler<BabyFoodInputs> = async (babyFoodInputData) => {
-    await createBabyFood(babyFoodInputData);
+    await updateBabyFood(babyFoodInputData);
     props.closeTheModal(); // ボタン押下時にモーダルを閉じる
   };
 
@@ -37,7 +37,7 @@ export default function BabyFoodUpdateModal(props: Props) {
     return config;
   }
 
-  async function createBabyFood(babyFoodInputData: BabyFoodInputs) {
+  async function updateBabyFood(babyFoodInputData: BabyFoodInputs) {
     const config = await setConfig();
 
     try {
@@ -255,13 +255,13 @@ export default function BabyFoodUpdateModal(props: Props) {
               </div>
             </div>
 
-            {/* 登録ボタン */}
+            {/* 更新ボタン */}
             <div className="p-2 w-full">
               <button
                 type="submit"
                 className="flex mx-auto text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pink-600 rounded text-md"
               >
-                こんだてを登録
+                こんだてを更新
               </button>
             </div>
           </form>
