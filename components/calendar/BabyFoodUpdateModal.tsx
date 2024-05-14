@@ -11,10 +11,10 @@ import Modal from 'react-modal';
 type Props = {
   open: boolean;
   closeTheModal: () => void;
-  selectedDate: string | null; // nullを許容するように修正
+  selectedEvent: { title: string; description: string; date: string;};
 };
 
-export default function BabyFoodRegistrationModal(props: Props) {
+export default function BabyFoodUpdateModal(props: Props) {
   const { currentUser } = useAuthContext();
   const router = useRouter();
 
@@ -25,7 +25,7 @@ export default function BabyFoodRegistrationModal(props: Props) {
   } = useForm<BabyFoodInputs>();
 
   const onSubmit: SubmitHandler<BabyFoodInputs> = async (babyFoodInputData) => {
-    await createBabyFood(babyFoodInputData);
+    await updateBabyFood(babyFoodInputData);
     props.closeTheModal(); // ボタン押下時にモーダルを閉じる
   };
 
@@ -37,24 +37,22 @@ export default function BabyFoodRegistrationModal(props: Props) {
     return config;
   }
 
-  async function createBabyFood(babyFoodInputData: BabyFoodInputs) {
+  async function updateBabyFood(babyFoodInputData: BabyFoodInputs) {
     const config = await setConfig();
-    // Add selectedDate as meal_date to babyFoodInputData
-    babyFoodInputData.meal_date = props.selectedDate || "";;
 
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         "/baby_foods",
         { baby_food: babyFoodInputData },
         config
       );
       if (response.status === 200) {
-        toast.success("離乳食の献立を登録しました!");
+        toast.success("離乳食の献立を更新しました!");
         router.push("/");
         return response.data;
       }
     } catch (err) {
-      toast.error("登録失敗: 何らかの問題が発生しました。");
+      toast.error("更新失敗: 何らかの問題が発生しました。");
       let message;
       if (axios.isAxiosError(err) && err.response) {
         console.error(err.response.data.message);
@@ -69,7 +67,7 @@ export default function BabyFoodRegistrationModal(props: Props) {
     <Modal
       isOpen={props.open}
       onRequestClose={props.closeTheModal}
-      contentLabel="Baby Food Registration Modal"
+      contentLabel="Baby Food Update Modal"
       style={{
         overlay: {
           backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -187,6 +185,7 @@ export default function BabyFoodRegistrationModal(props: Props) {
                   id="dish_name"
                   name="dish_name"
                   className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  value={props.selectedEvent.title}
                 />
                 {errors.dish_name &&
                   "Dish Name is required and should be less than 60 characters."}
@@ -207,6 +206,7 @@ export default function BabyFoodRegistrationModal(props: Props) {
                   id="meal_time"
                   name="meal_time"
                   className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
+                  value={props.selectedEvent.description}
                 >
                   <option value="break_fast">朝食</option>
                   <option value="lunch">昼食</option>
@@ -255,13 +255,13 @@ export default function BabyFoodRegistrationModal(props: Props) {
               </div>
             </div>
 
-            {/* 登録ボタン */}
+            {/* 更新ボタン */}
             <div className="p-2 w-full">
               <button
                 type="submit"
                 className="flex mx-auto text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pink-600 rounded text-md"
               >
-                こんだてを登録
+                こんだてを更新
               </button>
             </div>
           </form>
