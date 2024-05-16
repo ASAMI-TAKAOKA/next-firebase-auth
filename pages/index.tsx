@@ -31,7 +31,7 @@ export default function HomePage({ posts, babyFoods }: Props) {
   const [babyFoodRegistrationModalIsOpen, setBabyFoodRegistrationModalIsOpen] = useState(false);
   const [babyFoodUpdateModalIsOpen, setBabyFoodUpdateModalIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [selectedEvent, setSelectedEvent] = useState<{ title: string; description: string; date: string } | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<{ id: string; title: string; description: string; date: string } | null>(null);
   const { currentUser } = useAuthContext();
 
   const handleDateClick = (arg: DateClickArg) => {
@@ -61,6 +61,7 @@ export default function HomePage({ posts, babyFoods }: Props) {
     return mealOrder[a.meal_time] - mealOrder[b.meal_time];
   })
   .map((food) => ({
+    id: String(food.id),
     title: food.dish_name,
     description: food.meal_time,
     date: food.meal_date,

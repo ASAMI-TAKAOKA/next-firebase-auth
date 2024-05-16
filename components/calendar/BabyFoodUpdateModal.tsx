@@ -11,7 +11,7 @@ import Modal from 'react-modal';
 type Props = {
   open: boolean;
   closeTheModal: () => void;
-  selectedEvent: { title: string; description: string; date: string;};
+  selectedEvent: { id: string; title: string; description: string; date: string;};
 };
 
 export default function BabyFoodUpdateModal(props: Props) {
@@ -25,7 +25,7 @@ export default function BabyFoodUpdateModal(props: Props) {
   } = useForm<BabyFoodInputs>();
 
   const onSubmit: SubmitHandler<BabyFoodInputs> = async (babyFoodInputData) => {
-    await updateBabyFood(babyFoodInputData);
+    await updateBabyFood(props.selectedEvent.id, babyFoodInputData);
     props.closeTheModal(); // ボタン押下時にモーダルを閉じる
   };
 
@@ -37,12 +37,12 @@ export default function BabyFoodUpdateModal(props: Props) {
     return config;
   }
 
-  async function updateBabyFood(babyFoodInputData: BabyFoodInputs) {
+  async function updateBabyFood(id: string, babyFoodInputData: BabyFoodInputs) {
     const config = await setConfig();
 
     try {
       const response = await axios.put(
-        "/baby_foods",
+        `/baby_foods/${props.selectedEvent.id}`, // URLにcalendarのidパラメータを追加
         { baby_food: babyFoodInputData },
         config
       );
