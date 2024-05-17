@@ -5,7 +5,6 @@ import { PostData, BabyFoodData } from "types/types";
 import 'react-tabs/style/react-tabs.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import PostListItem from "components/posts/PostListItem";
-import { createCalendarArray } from "utils/createCalendarArray";
 import dayjs from 'dayjs';
 import { useMediaQuery } from 'react-responsive';
 import FullCalendar from "@fullcalendar/react";
@@ -14,7 +13,7 @@ import allLocales from '@fullcalendar/core/locales-all';
 import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
 import { EventClickArg } from "@fullcalendar/core";
 import BabyFoodRegistrationModal from "components/calendar/BabyFoodRegistrationModal"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuthContext } from 'context/AuthContext';
 import BabyFoodUpdateModal from "components/calendar/BabyFoodUpdateModal";
 
@@ -23,16 +22,40 @@ type Props = {
   babyFoods: BabyFoodData[];
 };
 
-export default function HomePage({ posts, babyFoods }: Props) {
-  const year = dayjs().format('YYYY');
-  const month = dayjs().format('M');
-  const calendarArray = createCalendarArray(year, month);
+export default function HomePage({ posts: initialPosts, babyFoods: initialBabyFoods }: Props) {
   const isMobileAndTablet = useMediaQuery({ maxWidth: 1023 }); // xs and sm and md breakpoint
   const [babyFoodRegistrationModalIsOpen, setBabyFoodRegistrationModalIsOpen] = useState(false);
   const [babyFoodUpdateModalIsOpen, setBabyFoodUpdateModalIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [selectedEvent, setSelectedEvent] = useState<{ title: string; description: string; date: string } | null>(null);
-  const { currentUser } = useAuthContext();
+  const [selectedEvent, setSelectedEvent] = useState<{ id: string; title: string; description: string; date: string } | null>(null);
+  const {currentUser} = useAuthContext();
+  const [posts, setPosts] = useState(initialPosts);
+  const [babyFoods, setBabyFoods] = useState(initialBabyFoods);
+
+  useEffect(() => {
+    console.log('HomePageがマウントされました');
+    const fetchBabyFoods = async () => {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/baby_foods/`);
+      if (response.ok) {
+        const data = (await response.json()) as BabyFoodData[];
+        setBabyFoods(data);
+      }
+    };
+
+    const fetchPosts = async () => {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/posts/`);
+      if (response.ok) {
+        const data = (await response.json()) as PostData[];
+        setPosts(data);
+      }
+    };
+
+    if (babyFoodRegistrationModalIsOpen === false && babyFoodUpdateModalIsOpen === false) {
+      fetchBabyFoods();
+    }
+    fetchPosts();
+
+  }, [babyFoodRegistrationModalIsOpen, babyFoodUpdateModalIsOpen]);
 
   const handleDateClick = (arg: DateClickArg) => {
     if (arg.date) {
@@ -57,10 +80,21 @@ export default function HomePage({ posts, babyFoods }: Props) {
 
   const calendarEvents = babyFoods
   .sort((a, b) => {
-    const mealOrder: Record<string, number> = { "break_fast": 0, "lunch": 1, "dinner": 2 };
-    return mealOrder[a.meal_time] - mealOrder[b.meal_time];
+    // meal_dateの昇順でソート
+    if (a.meal_date < b.meal_date) return -1;
+    if (a.meal_date > b.meal_date) return 1;
+
+    // meal_timeの優先順位を付けてソート
+    const mealTimeOrder: Record<string, number> = { "break_fast": 1, "lunch": 2, "dinner": 3 };
+    if (mealTimeOrder[a.meal_time] < mealTimeOrder[b.meal_time]) return -1;
+    if (mealTimeOrder[a.meal_time] > mealTimeOrder[b.meal_time]) return 1;
+
+    // meal_categoryの優先順位を付けてソート
+    const mealCategoryOrder: Record<string, number> = { "main_dish": 1, "main_course": 2, "side_dish": 3, "soup": 4, "other": 5 };
+    return mealCategoryOrder[a.meal_category] - mealCategoryOrder[b.meal_category];
   })
   .map((food) => ({
+    id: String(food.id),
     title: food.dish_name,
     description: food.meal_time,
     date: food.meal_date,
