@@ -6,11 +6,13 @@ type Props = {
 };
 
 export default function SearchForm(props: Props) {
-  <input
-    type="text"
-    value={props.searchInput}
-    onChange={props.handleSearchInputChange}
-    placeholder="このルームで検索"
-    className="mb-4 p-2 border rounded w-full"
-  />
+  return (
+    <input
+      type="text"
+      value={props.searchInput}
+      onChange={props.handleSearchInputChange}
+      placeholder="このルームで検索"
+      className="mb-4 p-2 border rounded w-full"
+    />
+  );
 }
