@@ -13,15 +13,38 @@ import allLocales from '@fullcalendar/core/locales-all';
 import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
 import { EventClickArg } from "@fullcalendar/core";
 import BabyFoodRegistrationModal from "components/calendar/BabyFoodRegistrationModal"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ChangeEvent } from 'react'
 import { useAuthContext } from 'context/AuthContext';
 import BabyFoodUpdateModal from "components/calendar/BabyFoodUpdateModal";
+import SearchForm from "components/SearchForm";
 
 type Props = {
   posts: PostData[];
   babyFoods: BabyFoodData[];
 };
 
+const CATEGORIES = [
+  "house_work", "work", "money", "human_relations", "outing_with_baby",
+  "health", "developmental", "baby_food", "childbirth", "breastfeeding",
+  "sleeping", "goods"
+];
+
+const CATEGORY_LABELS: { [key: string]: string } = {
+  "house_work": "家事",
+  "work": "仕事",
+  "money": "お金",
+  "human_relations": "人間関係",
+  "outing_with_baby": "赤ちゃんとのお出かけ",
+  "health": "健康",
+  "developmental": "発達",
+  "baby_food": "離乳食",
+  "childbirth": "出産",
+  "breastfeeding": "授乳",
+  "sleeping": "睡眠",
+  "goods": "グッズ"
+};
+
+// initialPostsプロパティ, initialBabyFoodsプロパティ: getServerSidePropsでサーバーサイドから取得された初期データ
 export default function HomePage({ posts: initialPosts, babyFoods: initialBabyFoods }: Props) {
   const isMobileAndTablet = useMediaQuery({ maxWidth: 1023 }); // xs and sm and md breakpoint
   const [babyFoodRegistrationModalIsOpen, setBabyFoodRegistrationModalIsOpen] = useState(false);
@@ -29,8 +52,11 @@ export default function HomePage({ posts: initialPosts, babyFoods: initialBabyFo
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<{ id: string; title: string; description: string; date: string } | null>(null);
   const {currentUser} = useAuthContext();
-  const [posts, setPosts] = useState(initialPosts);
+  const [posts, setPosts] = useState<PostData[]>(initialPosts);
   const [babyFoods, setBabyFoods] = useState(initialBabyFoods);
+  const [searchInput, setSearchInput] = useState('');
+  const [filteredPosts, setFilteredPosts] = useState<PostData[]>(initialPosts);
+  const [filteredCategoryPosts, setFilteredCategoryPosts] = useState<{ [key: string]: PostData[] }>({});
 
   useEffect(() => {
     console.log('HomePageがマウントされました');
@@ -50,12 +76,38 @@ export default function HomePage({ posts: initialPosts, babyFoods: initialBabyFo
       }
     };
 
-    if (babyFoodRegistrationModalIsOpen === false && babyFoodUpdateModalIsOpen === false) {
+    if (!babyFoodRegistrationModalIsOpen && !babyFoodUpdateModalIsOpen) {
       fetchBabyFoods();
     }
     fetchPosts();
 
   }, [babyFoodRegistrationModalIsOpen, babyFoodUpdateModalIsOpen]);
+
+  useEffect(() => {
+    const filterPosts = () => {
+      const filtered = initialPosts.filter(post =>
+        post.title.includes(searchInput) || post.body.includes(searchInput)
+      );
+      setFilteredPosts(filtered);
+    };
+
+    const filterCategoryPosts = () => {
+      const newFilteredCategoryPosts: { [key: string]: PostData[] } = {};
+      CATEGORIES.forEach(category => {
+        newFilteredCategoryPosts[category] = initialPosts.filter(post =>
+          post.category === category && (post.title.includes(searchInput) || post.body.includes(searchInput))
+        );
+      });
+      setFilteredCategoryPosts(newFilteredCategoryPosts);
+    };
+
+    filterPosts();
+    filterCategoryPosts();
+  }, [searchInput, initialPosts]);
+
+  const handleSearchInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(event.target.value);
+  };
 
   const handleDateClick = (arg: DateClickArg) => {
     if (arg.date) {
@@ -69,8 +121,8 @@ export default function HomePage({ posts: initialPosts, babyFoods: initialBabyFo
 
   const handleEventClick = (arg: EventClickArg) => {
     if (arg.event) {
-      const clickedDate = dayjs(arg.event.startStr).format('YYYY-MM-DD'); // クリックしたイベントの日付
-      const clickedEvent = calendarEvents.find(event => event.date === clickedDate && event.title === arg.event.title); // calendarEventsのdateとclickedDateが同じ かつ calendarEventsのtitleとクリックしたtitleが同じデータを、clickedEventとする
+      const clickedDate = dayjs(arg.event.startStr).format('YYYY-MM-DD');
+      const clickedEvent = calendarEvents.find(event => event.date === clickedDate && event.title === arg.event.title);
       if (clickedEvent) {
         setSelectedEvent(clickedEvent);
         setBabyFoodUpdateModalIsOpen(true);
@@ -79,29 +131,24 @@ export default function HomePage({ posts: initialPosts, babyFoods: initialBabyFo
   };
 
   const calendarEvents = babyFoods
-  .sort((a, b) => {
-    // meal_dateの昇順でソート
-    if (a.meal_date < b.meal_date) return -1;
-    if (a.meal_date > b.meal_date) return 1;
-
-    // meal_timeの優先順位を付けてソート
-    const mealTimeOrder: Record<string, number> = { "break_fast": 1, "lunch": 2, "dinner": 3 };
-    if (mealTimeOrder[a.meal_time] < mealTimeOrder[b.meal_time]) return -1;
-    if (mealTimeOrder[a.meal_time] > mealTimeOrder[b.meal_time]) return 1;
-
-    // meal_categoryの優先順位を付けてソート
-    const mealCategoryOrder: Record<string, number> = { "main_dish": 1, "main_course": 2, "side_dish": 3, "soup": 4, "other": 5 };
-    return mealCategoryOrder[a.meal_category] - mealCategoryOrder[b.meal_category];
-  })
-  .map((food) => ({
-    id: String(food.id),
-    title: food.dish_name,
-    description: food.meal_time,
-    date: food.meal_date,
-    backgroundColor: "#FF99FF",
-    borderColor: "#FF99FF",
-    editable: false
-  }));
+    .sort((a, b) => {
+      if (a.meal_date < b.meal_date) return -1;
+      if (a.meal_date > b.meal_date) return 1;
+      const mealTimeOrder: Record<string, number> = { "break_fast": 1, "lunch": 2, "dinner": 3 };
+      if (mealTimeOrder[a.meal_time] < mealTimeOrder[b.meal_time]) return -1;
+      if (mealTimeOrder[a.meal_time] > mealTimeOrder[b.meal_time]) return 1;
+      const mealCategoryOrder: Record<string, number> = { "main_dish": 1, "main_course": 2, "side_dish": 3, "soup": 4, "other": 5 };
+      return mealCategoryOrder[a.meal_category] - mealCategoryOrder[b.meal_category];
+    })
+    .map((food) => ({
+      id: String(food.id),
+      title: food.dish_name,
+      description: food.meal_time,
+      date: food.meal_date,
+      backgroundColor: "#FF99FF",
+      borderColor: "#FF99FF",
+      editable: false
+    }));
 
   const closeBabyFoodRegistrationModal = () => {
     setBabyFoodRegistrationModalIsOpen(false);
@@ -123,95 +170,84 @@ export default function HomePage({ posts: initialPosts, babyFoods: initialBabyFo
         />
       </Head>
       <section>
-        {/* 投稿記事一覧 */}
         <Tabs className="container mx-auto py-8 px-3">
           <TabList>
             <Tab>全ての投稿</Tab>
-            <Tab>家事</Tab>
-            <Tab>仕事</Tab>
-            <Tab>お金</Tab>
-            <Tab>人間関係</Tab>
-            <Tab>お出かけ</Tab>
-            <Tab>健康</Tab>
-            <Tab>発達</Tab>
-            <Tab>離乳食</Tab>
-            <Tab>出産</Tab>
-            <Tab>授乳</Tab>
-            <Tab>ねんね</Tab>
-            <Tab>グッズ</Tab>
+            {/* CATEGORY_LABELS[category]で、CATEGORY_LABELSオブジェクトからcategoryに対応する日本語のラベルを取得 */}
+            {CATEGORIES.map(category => (
+              <Tab key={category}>{CATEGORY_LABELS[category]}</Tab>
+            ))}
           </TabList>
+
+          <SearchForm searchInput={searchInput} handleSearchInputChange={handleSearchInputChange} />
+
           {/* スマホとタブレットかつログイン済みの場合、縦に表示*/}
-            {isMobileAndTablet && currentUser && (
-              <section className="container mx-auto">
-                {/* 離乳食カレンダー */}
-                <div className="flex flex-col items-center gap-1">
-                  {/* 登録モーダル */}
-                  {selectedDate && (
-                    <BabyFoodRegistrationModal
-                      open={babyFoodRegistrationModalIsOpen}
-                      closeTheModal={closeBabyFoodRegistrationModal}
-                      selectedDate={selectedDate}
-                    />
-                  )}
-                  {/* 更新モーダル */}
-                  {selectedEvent && (
-                    <BabyFoodUpdateModal
-                      open={babyFoodUpdateModalIsOpen}
-                      closeTheModal={closeBabyFoodUpdateModal}
-                      selectedEvent={selectedEvent}
-                    />
-                  )}
-
-                  <h2 className="text-center">離乳食カレンダー</h2>
-                  <FullCalendar
-                    plugins={[dayGridPlugin, interactionPlugin]}
-                    initialView="dayGridMonth" // ここをMonth or Weekに変更するだけで切り替わる
-                    locales={allLocales}
-                    locale="ja"
-                    events={calendarEvents}
-                    eventClick={handleEventClick}
-                    dateClick={(arg: DateClickArg) => {
-                      setBabyFoodRegistrationModalIsOpen(true);
-                      handleDateClick(arg);
-                    }}
+          {isMobileAndTablet && currentUser && (
+            <section className="container mx-auto">
+              <div className="flex flex-col items-center gap-1">
+                {selectedDate && (
+                  <BabyFoodRegistrationModal
+                    open={babyFoodRegistrationModalIsOpen}
+                    closeTheModal={closeBabyFoodRegistrationModal}
+                    selectedDate={selectedDate}
                   />
-                </div>
+                )}
+                {selectedEvent && (
+                  <BabyFoodUpdateModal
+                    open={babyFoodUpdateModalIsOpen}
+                    closeTheModal={closeBabyFoodUpdateModal}
+                    selectedEvent={selectedEvent}
+                  />
+                )}
 
-                <div className="flex flex-col items-center">
-                  <h2 className="mt-5">投稿記事</h2>
-                  <TabPanel>
-                    {posts?.map((post) => (
+                <h2 className="text-center">離乳食カレンダー</h2>
+                <FullCalendar
+                  plugins={[dayGridPlugin, interactionPlugin]}
+                  initialView="dayGridMonth"
+                  locales={allLocales}
+                  locale="ja"
+                  events={calendarEvents}
+                  eventClick={handleEventClick}
+                  dateClick={(arg: DateClickArg) => {
+                    setBabyFoodRegistrationModalIsOpen(true);
+                    handleDateClick(arg);
+                  }}
+                />
+              </div>
+
+              <div className="flex flex-col items-center">
+                <h2 className="mt-5">投稿記事</h2>
+                <TabPanel>
+                  {filteredPosts?.map((post) => (
+                    <PostListItem key={post.id} post={post} />
+                  ))}
+                </TabPanel>
+                {CATEGORIES.map((category, index) => (
+                  <TabPanel key={index}>
+                    {filteredCategoryPosts[category]?.map((post) => (
                       <PostListItem key={post.id} post={post} />
                     ))}
                   </TabPanel>
-                  {/* カテゴリに合った記事だけを表示 */}
-                  {["house_work", "work", "money", "human_relations", "outing_with_baby", "health", "developmental", "baby_food", "childbirth", "breastfeeding", "sleeping", "goods"].map((category, index) => (
-                    <TabPanel key={index}>
-                      {posts?.filter(post => post.category === category).map((post) => (
-                        <PostListItem key={post.id} post={post} />
-                      ))}
-                    </TabPanel>
-                  ))}
-                </div>
-              </section>
-            )}
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* スマホとタブレット以外(PC等)かつログイン済みの場合、水平にアイテムを表示 */}
-            {!isMobileAndTablet && currentUser && (
-              <section className="container flex">
+          {!isMobileAndTablet && currentUser && (
+            <section className="container flex">
               <div className="w-1/3">
                 {/* 投稿記事一覧 */}
                 <div>
                   <h2 className="text-center">投稿記事</h2>
                   <TabPanel>
-                    {posts?.map((post) => (
-                      <PostListItem key={post.id} post={post} />
-                    ))}
+                  {filteredPosts?.map((post) => (
+                    <PostListItem key={post.id} post={post} />
+                  ))}
                   </TabPanel>
-                  {/* カテゴリに合った記事だけを表示 */}
-                  {["house_work", "work", "money", "human_relations", "outing_with_baby", "health", "developmental", "baby_food", "childbirth", "breastfeeding", "sleeping", "goods"].map((category, index) => (
+                  {CATEGORIES.map((category, index) => (
                     <TabPanel key={index}>
-                      {posts?.filter(post => post.category === category).map((post) => (
+                      {filteredCategoryPosts[category]?.map((post) => (
                         <PostListItem key={post.id} post={post} />
                       ))}
                     </TabPanel>
@@ -222,7 +258,6 @@ export default function HomePage({ posts: initialPosts, babyFoods: initialBabyFo
               <div className="w-2/3">
                 {/* 離乳食カレンダー */}
                 <div className="">
-                  {/* 登録モーダル */}
                   {selectedDate && (
                     <BabyFoodRegistrationModal
                       open={babyFoodRegistrationModalIsOpen}
@@ -230,7 +265,6 @@ export default function HomePage({ posts: initialPosts, babyFoods: initialBabyFo
                       selectedDate={selectedDate}
                     />
                   )}
-                  {/* 更新モーダル */}
                   {selectedEvent && (
                     <BabyFoodUpdateModal
                       open={babyFoodUpdateModalIsOpen}
@@ -242,7 +276,7 @@ export default function HomePage({ posts: initialPosts, babyFoods: initialBabyFo
                   <h2 className="text-center">離乳食カレンダー</h2>
                   <FullCalendar
                     plugins={[dayGridPlugin, interactionPlugin]}
-                    initialView="dayGridMonth" // ここをMonth or Weekに変更するだけで切り替わる
+                    initialView="dayGridMonth"
                     locales={allLocales}
                     locale="ja"
                     events={calendarEvents}
