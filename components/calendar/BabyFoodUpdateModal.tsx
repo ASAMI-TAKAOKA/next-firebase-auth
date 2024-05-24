@@ -7,16 +7,19 @@ import { useAuthContext } from 'context/AuthContext';
 import { useRouter } from 'next/router';
 import { BabyFoodInputs } from "types/types";
 import Modal from 'react-modal';
+import { useState, useEffect } from 'react'
 
 type Props = {
   open: boolean;
   closeTheModal: () => void;
-  selectedEvent: { id: string; title: string; description: string; date: string;};
+  selectedEventId: string;
 };
 
 export default function BabyFoodUpdateModal(props: Props) {
   const { currentUser } = useAuthContext();
   const router = useRouter();
+
+  const [selectedEventData, setSelectedEventData] = useState<any>(null);
 
   const {
     register,
@@ -24,8 +27,29 @@ export default function BabyFoodUpdateModal(props: Props) {
     formState: { errors }
   } = useForm<BabyFoodInputs>();
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = await currentUser?.getIdToken();
+      const config = {
+        headers: { authorization: `Bearer ${token}` },
+      };
+
+      try {
+        const response = await axios.get(`/baby_foods/${props.selectedEventId}`, config);
+        setSelectedEventData(response.data);
+        console.log(response.data);
+      } catch (err) {
+        console.error('Failed to fetch event data:', err);
+      }
+    };
+
+    if (props.open && props.selectedEventId) {
+      fetchData();
+    }
+  }, [props.open, props.selectedEventId, currentUser]);
+
   const onSubmit: SubmitHandler<BabyFoodInputs> = async (babyFoodInputData) => {
-    await updateBabyFood(props.selectedEvent.id, babyFoodInputData);
+    await updateBabyFood(props.selectedEventId, babyFoodInputData);
     props.closeTheModal(); // ボタン押下時にモーダルを閉じる
   };
 
@@ -42,7 +66,7 @@ export default function BabyFoodUpdateModal(props: Props) {
 
     try {
       const response = await axios.put(
-        `/baby_foods/${props.selectedEvent.id}`, // URLにcalendarのidパラメータを追加
+        `/baby_foods/${props.selectedEventId}`, // URLにcalendarのidパラメータを追加
         { baby_food: babyFoodInputData },
         config
       );
@@ -121,6 +145,7 @@ export default function BabyFoodUpdateModal(props: Props) {
                       value="main_dish"
                       className="form-radio h-5 w-5 text-pink-600"
                       onChange={(e) => console.log("ラジオボタンで選択した値:", e.target.value)}
+                      checked={selectedEventData?.meal_category === "main_dish"}
                     />
                     <span className="ml-2">主食</span>
                   </label>
@@ -131,6 +156,7 @@ export default function BabyFoodUpdateModal(props: Props) {
                       value="main_course"
                       className="form-radio h-5 w-5 text-pink-600"
                       onChange={(e) => console.log("ラジオボタンで選択した値:", e.target.value)}
+                      checked={selectedEventData?.meal_category === "main_course"}
                     />
                     <span className="ml-2">主菜</span>
                   </label>
@@ -141,6 +167,7 @@ export default function BabyFoodUpdateModal(props: Props) {
                       value="side_dish"
                       className="form-radio h-5 w-5 text-pink-600"
                       onChange={(e) => console.log("選択した:", e.target.value)}
+                      checked={selectedEventData?.meal_category === "side_dish"}
                     />
                     <span className="ml-2">副菜</span>
                   </label>
@@ -151,6 +178,7 @@ export default function BabyFoodUpdateModal(props: Props) {
                       value="soup"
                       className="form-radio h-5 w-5 text-pink-600"
                       onChange={(e) => console.log("選択した値:", e.target.value)}
+                      checked={selectedEventData?.meal_category === "soup"}
                     />
                     <span className="ml-2">汁物</span>
                   </label>
@@ -161,6 +189,7 @@ export default function BabyFoodUpdateModal(props: Props) {
                       value="other"
                       className="form-radio h-5 w-5 text-pink-600"
                       onChange={(e) => console.log("ラジオボタン選択した値:", e.target.value)}
+                      checked={selectedEventData?.meal_category === "other"}
                     />
                     <span className="ml-2">その他</span>
                   </label>
@@ -185,7 +214,7 @@ export default function BabyFoodUpdateModal(props: Props) {
                   id="dish_name"
                   name="dish_name"
                   className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                  defaultValue={props.selectedEvent.title}
+                  defaultValue={selectedEventData?.dish_name || ""}
                 />
                 {errors.dish_name &&
                   "Dish Name is required and should be less than 60 characters."}
@@ -206,7 +235,7 @@ export default function BabyFoodUpdateModal(props: Props) {
                   id="meal_time"
                   name="meal_time"
                   className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
-                  defaultValue={props.selectedEvent.description}
+                  defaultValue={selectedEventData?.meal_time || ""}
                 >
                   <option value="break_fast">朝食</option>
                   <option value="lunch">昼食</option>
@@ -232,6 +261,7 @@ export default function BabyFoodUpdateModal(props: Props) {
                   id="url"
                   name="url"
                   className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
+                  defaultValue={selectedEventData?.url || ""}
                 />
               </div>
             </div>
@@ -251,6 +281,7 @@ export default function BabyFoodUpdateModal(props: Props) {
                   id="memo"
                   name="memo"
                   className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  defaultValue={selectedEventData?.memo || ""}
                 />
               </div>
             </div>

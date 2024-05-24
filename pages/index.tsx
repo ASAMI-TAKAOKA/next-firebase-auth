@@ -50,7 +50,7 @@ export default function HomePage({ posts: initialPosts, babyFoods: initialBabyFo
   const [babyFoodRegistrationModalIsOpen, setBabyFoodRegistrationModalIsOpen] = useState(false);
   const [babyFoodUpdateModalIsOpen, setBabyFoodUpdateModalIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [selectedEvent, setSelectedEvent] = useState<{ id: string; title: string; description: string; date: string } | null>(null);
+  const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
   const {currentUser} = useAuthContext();
   const [posts, setPosts] = useState<PostData[]>(initialPosts);
   const [babyFoods, setBabyFoods] = useState(initialBabyFoods);
@@ -124,7 +124,7 @@ export default function HomePage({ posts: initialPosts, babyFoods: initialBabyFo
       const clickedDate = dayjs(arg.event.startStr).format('YYYY-MM-DD');
       const clickedEvent = calendarEvents.find(event => event.date === clickedDate && event.title === arg.event.title);
       if (clickedEvent) {
-        setSelectedEvent(clickedEvent);
+        setSelectedEventId(clickedEvent.id);
         setBabyFoodUpdateModalIsOpen(true);
       }
     }
@@ -157,7 +157,7 @@ export default function HomePage({ posts: initialPosts, babyFoods: initialBabyFo
 
   const closeBabyFoodUpdateModal = () => {
     setBabyFoodUpdateModalIsOpen(false);
-    setSelectedEvent(null);
+    setSelectedEventId(null);
   };
 
   const mealTimeLabels: { [key: string]: string } = {
@@ -198,11 +198,11 @@ export default function HomePage({ posts: initialPosts, babyFoods: initialBabyFo
                     selectedDate={selectedDate}
                   />
                 )}
-                {selectedEvent && (
+                {selectedEventId && (
                   <BabyFoodUpdateModal
                     open={babyFoodUpdateModalIsOpen}
                     closeTheModal={closeBabyFoodUpdateModal}
-                    selectedEvent={selectedEvent}
+                    selectedEventId={selectedEventId}
                   />
                 )}
 
@@ -277,11 +277,11 @@ export default function HomePage({ posts: initialPosts, babyFoods: initialBabyFo
                       selectedDate={selectedDate}
                     />
                   )}
-                  {selectedEvent && (
+                  {selectedEventId && (
                     <BabyFoodUpdateModal
                       open={babyFoodUpdateModalIsOpen}
                       closeTheModal={closeBabyFoodUpdateModal}
-                      selectedEvent={selectedEvent}
+                      selectedEventId={selectedEventId}
                     />
                   )}
 
