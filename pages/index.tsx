@@ -160,6 +160,12 @@ export default function HomePage({ posts: initialPosts, babyFoods: initialBabyFo
     setSelectedEvent(null);
   };
 
+  const mealTimeLabels: { [key: string]: string } = {
+    "break_fast": "朝食",
+    "lunch": "昼食",
+    "dinner": "夕食"
+  };
+
   return (
     <>
       <Head>
@@ -212,6 +218,12 @@ export default function HomePage({ posts: initialPosts, babyFoods: initialBabyFo
                     setBabyFoodRegistrationModalIsOpen(true);
                     handleDateClick(arg);
                   }}
+                  eventContent={(arg) => (
+                    <div>
+                      <p>{mealTimeLabels[arg.event.extendedProps.description] || arg.event.extendedProps.description}</p>
+                      <b>{arg.event.title}</b>
+                    </div>
+                  )}
                 />
               </div>
 
@@ -285,6 +297,12 @@ export default function HomePage({ posts: initialPosts, babyFoods: initialBabyFo
                       setBabyFoodRegistrationModalIsOpen(true);
                       handleDateClick(arg);
                     }}
+                    eventContent={(arg) => (
+                      <div>
+                        <p>{mealTimeLabels[arg.event.extendedProps.description] || arg.event.extendedProps.description}</p>
+                        <b>{arg.event.title}</b>
+                      </div>
+                    )}
                   />
                 </div>
               </div>
