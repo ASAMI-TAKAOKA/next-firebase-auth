@@ -34,7 +34,7 @@ const CATEGORY_LABELS: { [key: string]: string } = {
   "work": "仕事",
   "money": "お金",
   "human_relations": "人間関係",
-  "outing_with_baby": "赤ちゃんとのお出かけ",
+  "outing_with_baby": "お出かけ",
   "health": "健康",
   "developmental": "発達",
   "baby_food": "離乳食",
