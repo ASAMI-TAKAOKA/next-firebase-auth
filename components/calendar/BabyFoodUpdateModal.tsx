@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { BabyFoodInputs } from "types/types";
 import Modal from 'react-modal';
 import { useState, useEffect } from 'react';
+import Link from "next/link";
 
 type Props = {
   open: boolean;
@@ -111,6 +112,39 @@ export default function BabyFoodUpdateModal(props: Props) {
       }
     }
   }
+
+  const deleteBabyFood = async () => {
+    const result = confirm("削除しますか？");
+    if (result) {
+      const token = await currentUser?.getIdToken();
+
+      const config = {
+        headers: { authorization: `Bearer ${token}` },
+      };
+
+      try {
+        const response = await axios.delete(
+          `/baby_foods/${props.selectedEventId}`,
+          config
+        );
+        if (response.status === 200) {
+          toast.success("離乳食の献立を削除しました!");
+          props.closeTheModal(); // ボタン押下時にモーダルを閉じる
+          router.push("/");
+        }
+      } catch (err) {
+        toast.error("削除失敗: 何らかの問題が発生しました。");
+        let message;
+        if (axios.isAxiosError(err) && err.response) {
+          console.error(err.response.data.message);
+        } else {
+          message = String(err);
+          console.error(message);
+        }
+      }
+    }
+  };
+
 
   return props.open ? (
     <Modal
@@ -274,15 +308,23 @@ export default function BabyFoodUpdateModal(props: Props) {
               </div>
             </div>
 
-            {/* 更新ボタン */}
-            <div className="p-2 w-full">
+            <div className="flex justify-between p-2 w-1/2">
               <button
                 type="submit"
-                className="flex mx-auto text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pink-600 rounded text-md"
+                className="text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded text-md"
               >
                 こんだてを更新
               </button>
+              <button
+                type="button"
+                onClick={deleteBabyFood}
+                className="text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-md"
+              >
+                削除
+              </button>
             </div>
+
+
           </form>
         </div>
       </div>
