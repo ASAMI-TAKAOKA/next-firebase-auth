@@ -15,7 +15,7 @@ export default function SearchForm(props: Props) {
       value={props.searchInput}
       onChange={props.handleSearchInputChange}
       placeholder="このルームで検索"
-      className={`mb-4 p-2 border rounded ${isMobileAndTablet ? 'w-full' : 'w-1/3'}`}
+      className={`mb-4 p-2 border border-gray-400 rounded ${isMobileAndTablet ? 'w-full' : 'w-1/3'}`}
     />
   );
 }
