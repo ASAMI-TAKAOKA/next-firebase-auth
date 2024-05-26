@@ -158,13 +158,14 @@ export default function BabyFoodUpdateModal(props: Props) {
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-wrap -m-2"
           >
-
+      {/* <p>選択されたラジオボタン：{selectedRadioBtnValue}</p> */}
+      {/* 参考: https://web-engineer-wiki.com/javascript/react/radio-btn/#index_id2  */}
             {/* Meal Category */}
             <div className="p-2 w-full">
               <div className="relative">
                 <div>
                   {MEAL_CATEGORIES.map((mealCategory) => (
-                    <label key={mealCategory.value} className="inline-flex items-center">
+                    <label key={mealCategory.value} className="inline-flex items-center ml-6">
                       <input
                         type="radio"
                         value={mealCategory.value}
@@ -173,12 +174,12 @@ export default function BabyFoodUpdateModal(props: Props) {
                         onChange={onRadioBtnChanged}
                         checked={mealCategory.value === selectedRadioBtnValue}
                       />
-                      {mealCategory.value}
+                      {mealCategory.label}
                     </label>
                   ))}
                 </div>
                 {errors.meal_category &&
-                  <span className="text-red-500">Meal Category is required.</span>}
+                  <p className="text-red-500">Meal Category is required.</p>}
               </div>
             </div>
 
