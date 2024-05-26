@@ -4,7 +4,7 @@ const About = () => {
   return (
     <div>
       {/* Header */}
-      <section className="bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white py-20">
+      <section className="bg-gradient-to-r from-pink-400 via-pink-300 to-pink-400 text-white py-20">
         <div className="container mx-auto px-6 md:px-12 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-10">
             Mom and Baby Help へようこそ
