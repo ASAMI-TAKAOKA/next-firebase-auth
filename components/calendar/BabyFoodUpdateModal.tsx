@@ -311,14 +311,14 @@ export default function BabyFoodUpdateModal(props: Props) {
             <div className="container flex flex-wrap justify-between p-3 mx-auto">
               <button
                 type="submit"
-                className="w-full lg:w-1/2 mb-3 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded text-md"
+                className="w-full lg:w-1/2 mb-1 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded text-md"
               >
                 献立を更新
               </button>
               <button
                 type="button"
                 onClick={deleteBabyFood}
-                className="w-full lg:w-1/2 text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-md"
+                className="w-full lg:w-1/2 mb-1 text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-md"
               >
                 削除
               </button>
