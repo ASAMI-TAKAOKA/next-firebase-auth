@@ -7,7 +7,7 @@ import { useAuthContext } from 'context/AuthContext';
 import { useRouter } from 'next/router';
 import { BabyFoodInputs } from "types/types";
 import Modal from 'react-modal';
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
 type Props = {
   open: boolean;
@@ -24,8 +24,19 @@ export default function BabyFoodUpdateModal(props: Props) {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    reset
   } = useForm<BabyFoodInputs>();
+
+  const MEAL_CATEGORIES = [
+    { value: "main_dish", label: "主食" },
+    { value: "main_course", label: "主菜" },
+    { value: "side_dish", label: "副菜" },
+    { value: "soup", label: "汁物" },
+    { value: "other", label: "その他" }
+  ];
+  const [selectedRadioBtnValue, setSelectedRadioBtnValue] = useState<string>('');
+  const onRadioBtnChanged = (e: React.ChangeEvent<HTMLInputElement>) => setSelectedRadioBtnValue(e.target.value);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,8 +47,22 @@ export default function BabyFoodUpdateModal(props: Props) {
 
       try {
         const response = await axios.get(`/baby_foods/${props.selectedEventId}`, config);
-        setSelectedEventData(response.data);
-        console.log(response.data);
+        setSelectedEventData(response.data); // nullから更新する
+        setSelectedRadioBtnValue(response.data.meal_category); // ラジオボタンの値を""から更新する
+        // resetはAPIから取得したデータを使ってフォームの初期値を設定するために使用。
+        // これを使わないと初期値が""の状態として読み込まれてしまい、dish_name入力フォームで「入力必須です」エラーが発生してしまう
+        reset({
+        meal_category: response.data.meal_category,
+        dish_name: response.data.dish_name,
+        meal_time: response.data.meal_time,
+        url: response.data.url,
+        memo: response.data.memo
+      });
+      // resetの直後にconsole.logを使用して値を確認しても、
+      // Reactの状態更新が非同期の状態更新のため、
+      // 値がすぐには反映されない...(単純に反映までに時間がかかる)
+      // console.log(selectedEventData);
+      // console.log(selectedRadioBtnValue);
       } catch (err) {
         console.error('Failed to fetch event data:', err);
       }
@@ -138,61 +163,19 @@ export default function BabyFoodUpdateModal(props: Props) {
             <div className="p-2 w-full">
               <div className="relative">
                 <div>
-                  <label className="inline-flex items-center">
-                    <input
-                      {...register("meal_category", { required: true })}
-                      type="radio"
-                      value="main_dish"
-                      className="form-radio h-5 w-5 text-pink-600"
-                      onChange={(e) => console.log("ラジオボタンで選択した値:", e.target.value)}
-                      checked={selectedEventData?.meal_category === "main_dish"}
-                    />
-                    <span className="ml-2">主食</span>
-                  </label>
-                  <label className="inline-flex items-center ml-6">
-                    <input
-                      {...register("meal_category", { required: true })}
-                      type="radio"
-                      value="main_course"
-                      className="form-radio h-5 w-5 text-pink-600"
-                      onChange={(e) => console.log("ラジオボタンで選択した値:", e.target.value)}
-                      checked={selectedEventData?.meal_category === "main_course"}
-                    />
-                    <span className="ml-2">主菜</span>
-                  </label>
-                  <label className="inline-flex items-center ml-6">
-                    <input
-                      {...register("meal_category", { required: true })}
-                      type="radio"
-                      value="side_dish"
-                      className="form-radio h-5 w-5 text-pink-600"
-                      onChange={(e) => console.log("選択した:", e.target.value)}
-                      checked={selectedEventData?.meal_category === "side_dish"}
-                    />
-                    <span className="ml-2">副菜</span>
-                  </label>
-                  <label className="inline-flex items-center ml-6">
-                    <input
-                      {...register("meal_category", { required: true })}
-                      type="radio"
-                      value="soup"
-                      className="form-radio h-5 w-5 text-pink-600"
-                      onChange={(e) => console.log("選択した値:", e.target.value)}
-                      checked={selectedEventData?.meal_category === "soup"}
-                    />
-                    <span className="ml-2">汁物</span>
-                  </label>
-                  <label className="inline-flex items-center ml-6">
-                    <input
-                      {...register("meal_category", { required: true })}
-                      type="radio"
-                      value="other"
-                      className="form-radio h-5 w-5 text-pink-600"
-                      onChange={(e) => console.log("ラジオボタン選択した値:", e.target.value)}
-                      checked={selectedEventData?.meal_category === "other"}
-                    />
-                    <span className="ml-2">その他</span>
-                  </label>
+                  {MEAL_CATEGORIES.map((mealCategory) => (
+                    <label key={mealCategory.value} className="inline-flex items-center">
+                      <input
+                        type="radio"
+                        value={mealCategory.value}
+                        className="form-radio h-5 w-5 text-pink-600"
+                        name="meal_category"
+                        onChange={onRadioBtnChanged}
+                        checked={mealCategory.value === selectedRadioBtnValue}
+                      />
+                      {mealCategory.value}
+                    </label>
+                  ))}
                 </div>
                 {errors.meal_category &&
                   <span className="text-red-500">Meal Category is required.</span>}
@@ -256,7 +239,11 @@ export default function BabyFoodUpdateModal(props: Props) {
                   URL
                 </label>
                 <input
-                  {...register("url", { required: false })}
+                  {...register("url", {
+                    required: false,
+                    maxLength: 500,
+                    pattern: /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i,
+                  })}
                   type="url"
                   id="url"
                   name="url"
