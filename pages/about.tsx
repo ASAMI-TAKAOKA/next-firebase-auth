@@ -25,7 +25,7 @@ const About = () => {
             <div className="p-4 w-full md:w-1/3">
               <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition duration-300">
                 <img src="https://via.placeholder.com/100" alt="相談" className="w-16 h-16 mb-4 mx-auto rounded-full" />
-                <h3 className="text-xl font-bold mb-2">悩みを気軽に相談できる</h3>
+                <h3 className="text-xl font-bold mb-2 text-center">悩みを気軽に相談できる</h3>
                 <p>
                   赤ちゃんを育てている者同士、お互いに気軽に相談したり相談に乗ったりすることができます。
                 </p>
@@ -34,7 +34,7 @@ const About = () => {
             <div className="p-4 w-full md:w-1/3">
               <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition duration-300">
                 <img src="https://via.placeholder.com/100" alt="離乳食" className="w-16 h-16 mb-4 mx-auto rounded-full" />
-                <h3 className="text-xl font-bold mb-2">離乳食作りをサポート</h3>
+                <h3 className="text-xl font-bold mb-2 text-center">離乳食作りをサポート</h3>
                 <p>
                   献立のカレンダー登録機能や離乳食ごとの集計機能で、栄養が偏ることなく離乳食を作ることができます。
                 </p>
@@ -43,7 +43,7 @@ const About = () => {
             <div className="p-4 w-full md:w-1/3">
               <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition duration-300">
                 <img src="https://via.placeholder.com/100" alt="服装提案" className="w-16 h-16 mb-4 mx-auto rounded-full" />
-                <h3 className="text-xl font-bold mb-2">赤ちゃんの服装をご提案</h3>
+                <h3 className="text-xl font-bold mb-2 text-center">赤ちゃんの服装をご提案</h3>
                 <p>
                   服装の提案機能で、「今日の天気や気温に合った子供の服装がわからない…」という悩みを解消します。
                 </p>
