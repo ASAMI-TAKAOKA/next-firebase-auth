@@ -80,11 +80,11 @@ const Header = () => {
             {currentUser && (
               <Link
                 onClick={() => setHamburgerMenuOpen(false)}
-                href="/"
+                href="/about"
                 className="block rounded-lg bg-pink-400 px-5 py-3 text-sm font-medium text-white transition hover:bg-pink-700 focus:outline-none focus:ring"
                 type="button"
               >
-                記事を探す
+                このアプリについて
               </Link>
             )}
           <li>
