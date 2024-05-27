@@ -68,7 +68,7 @@ const About = () => {
             </div>
           </div>
           <div className="text-center mt-8 text-sm text-gray-500">
-            &copy; 2024 Personal Development App. All rights reserved.
+            &copy; 2024 Mom and Baby Help. All rights reserved.
           </div>
         </div>
       </footer>
