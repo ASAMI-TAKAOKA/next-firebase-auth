@@ -1,6 +1,7 @@
 # Mom and Baby Help
 
-![スクリーンショット 2024-05-26 23 09 52](https://github.com/ASAMI-TAKAOKA/next-firebase-auth/assets/77926245/3cb3f8e8-25f9-4f06-b40c-7341b8847acf)
+
+![スクリーンショット 2024-05-27 22 28 24](https://github.com/ASAMI-TAKAOKA/next-firebase-auth/assets/77926245/50f08855-aecc-4136-ac7c-7016ae59b7c0)
 
 
 
