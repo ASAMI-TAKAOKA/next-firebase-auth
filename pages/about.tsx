@@ -4,7 +4,7 @@ const About = () => {
   return (
     <div>
       {/* Header */}
-      <section className="bg-gradient-to-r from-pink-400 via-pink-300 to-pink-400 text-white py-20">
+      <section className="bg-gradient-to-r from-pink-400 via-pink-300 to-pink-400 text-white py-20 rounded-lg">
         <div className="container mx-auto px-6 md:px-12 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-10">
             Mom and Baby Help へようこそ
@@ -54,7 +54,7 @@ const About = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-8">
+      <footer className="bg-gray-800 text-white py-8 rounded-lg">
         <div className="container mx-auto px-6 md:px-12">
           <div className="flex flex-wrap justify-between">
             <div className="w-full md:w-1/3">
