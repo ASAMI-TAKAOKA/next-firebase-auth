@@ -1,6 +1,5 @@
 import Head from "next/head";
-import { GetServerSideProps } from "next";
-import fetch from "node-fetch";
+import axios from "axios";
 import { PostData, BabyFoodData } from "types/types";
 import 'react-tabs/style/react-tabs.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -44,57 +43,95 @@ const CATEGORY_LABELS: { [key: string]: string } = {
   "goods": "グッズ"
 };
 
-// initialPostsプロパティ, initialBabyFoodsプロパティ: getServerSidePropsでサーバーサイドから取得された初期データ
-export default function HomePage({ posts: initialPosts, babyFoods: initialBabyFoods }: Props) {
+export default function HomePage() {
   const isMobileAndTablet = useMediaQuery({ maxWidth: 1023 }); // xs and sm and md breakpoint
   const [babyFoodRegistrationModalIsOpen, setBabyFoodRegistrationModalIsOpen] = useState(false);
   const [babyFoodUpdateModalIsOpen, setBabyFoodUpdateModalIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
   const {currentUser} = useAuthContext();
-  const [posts, setPosts] = useState<PostData[]>(initialPosts);
-  const [babyFoods, setBabyFoods] = useState(initialBabyFoods);
+  const [posts, setPosts] = useState<PostData[]>();
+  const [babyFoods, setBabyFoods] = useState<BabyFoodData[]>();
   const [searchInput, setSearchInput] = useState('');
-  const [filteredPosts, setFilteredPosts] = useState<PostData[]>(initialPosts);
+  const [filteredPosts, setFilteredPosts] = useState<PostData[]>();
   const [filteredCategoryPosts, setFilteredCategoryPosts] = useState<{ [key: string]: PostData[] }>({});
 
   useEffect(() => {
     console.log('HomePageがマウントされました');
-    const fetchBabyFoods = async () => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/baby_foods/`);
-      if (response.ok) {
-        const data = (await response.json()) as BabyFoodData[];
-        setBabyFoods(data);
+
+    async function setConfig() {
+      const token = await currentUser?.getIdToken();
+      console.log("Token:", token);
+
+      const config = {
+        headers: { authorization: `Bearer ${token}` },
+      };
+      console.log("Config:", config);
+      return config;
+    }
+
+    async function fetchPosts() {
+      try {
+        const config = await setConfig();
+        console.log("Config:", config);
+        const response = await axios.get("/posts/", config);
+        if (response.status === 200) {
+          const data = response.data;
+          setPosts(data);
+        }
+      } catch (err) {
+        let message;
+        if (axios.isAxiosError(err) && err.response) {
+          console.error(err.response.data.message);
+        } else {
+          message = String(err);
+          console.error(message);
+        }
       }
     };
+    fetchPosts();
 
-    const fetchPosts = async () => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/posts/`);
-      if (response.ok) {
-        const data = (await response.json()) as PostData[];
-        setPosts(data);
+    async function fetchBabyFoods() {
+      try {
+        const config = await setConfig();
+        console.log("Config:", config);
+        const response = await axios.get("/baby_foods/", config);
+        if (response.status === 200) {
+          const data = response.data;
+          setBabyFoods(data);
+        }
+      } catch (err) {
+        let message;
+        if (axios.isAxiosError(err) && err.response) {
+          console.error(err.response.data.message);
+        } else {
+          message = String(err);
+          console.error(message);
+        }
       }
     };
 
     if (!babyFoodRegistrationModalIsOpen && !babyFoodUpdateModalIsOpen) {
       fetchBabyFoods();
     }
-    fetchPosts();
 
   }, [babyFoodRegistrationModalIsOpen, babyFoodUpdateModalIsOpen]);
 
+
   useEffect(() => {
     const filterPosts = () => {
-      const filtered = initialPosts.filter(post =>
+      const filtered = posts?.filter(post =>
         post.title.includes(searchInput) || post.body.includes(searchInput)
       );
       setFilteredPosts(filtered);
     };
 
     const filterCategoryPosts = () => {
+      if (!posts) return; // posts が undefined の場合は処理をスキップ
+
       const newFilteredCategoryPosts: { [key: string]: PostData[] } = {};
       CATEGORIES.forEach(category => {
-        newFilteredCategoryPosts[category] = initialPosts.filter(post =>
+        newFilteredCategoryPosts[category] = posts.filter(post =>
           post.category === category && (post.title.includes(searchInput) || post.body.includes(searchInput))
         );
       });
@@ -103,7 +140,7 @@ export default function HomePage({ posts: initialPosts, babyFoods: initialBabyFo
 
     filterPosts();
     filterCategoryPosts();
-  }, [searchInput, initialPosts]);
+  }, [searchInput, posts]);
 
   const handleSearchInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value);
@@ -130,7 +167,7 @@ export default function HomePage({ posts: initialPosts, babyFoods: initialBabyFo
     }
   };
 
-  const calendarEvents = babyFoods
+  const calendarEvents = (babyFoods || [])
     .sort((a, b) => {
       if (a.meal_date < b.meal_date) return -1;
       if (a.meal_date > b.meal_date) return 1;
@@ -313,33 +350,3 @@ export default function HomePage({ posts: initialPosts, babyFoods: initialBabyFo
     </>
   );
 };
-
-export const getServerSideProps: GetServerSideProps<Props> = async (
-  context
-) => {
-  const postRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/posts/`);
-  const babyFoodsRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/baby_foods/`);
-
-  let posts: PostData[] = [];
-  let babyFoods: BabyFoodData[] = [];
-
-  if (postRes.ok) {
-    posts = (await postRes.json()) as PostData[];
-  }
-  if (babyFoodsRes.ok) {
-    babyFoods = (await babyFoodsRes.json()) as BabyFoodData[];
-  }
-
-  postRes.headers.set(
-    "Cache-Control",
-    "public, s-maxage=10, stale-while-revalidate=59"
-  );
-
-  babyFoodsRes.headers.set(
-    "Cache-Control",
-    "public, s-maxage=10, stale-while-revalidate=59"
-  );
-
-  return { props: { posts, babyFoods } };
-};
-
