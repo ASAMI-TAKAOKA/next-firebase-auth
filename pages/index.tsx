@@ -59,6 +59,15 @@ export default function HomePage() {
   useEffect(() => {
     console.log('HomePageがマウントされました');
 
+    const fetchPosts = async () => {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/posts/`);
+      if (response.ok) {
+        const data = (await response.json()) as PostData[];
+        setPosts(data);
+      }
+    };
+    fetchPosts();
+
     async function setConfig() {
       const token = await currentUser?.getIdToken();
       console.log("Token:", token);
@@ -69,27 +78,6 @@ export default function HomePage() {
       console.log("Config:", config);
       return config;
     }
-
-    async function fetchPosts() {
-      try {
-        const config = await setConfig();
-        console.log("Config:", config);
-        const response = await axios.get("/posts/", config);
-        if (response.status === 200) {
-          const data = response.data;
-          setPosts(data);
-        }
-      } catch (err) {
-        let message;
-        if (axios.isAxiosError(err) && err.response) {
-          console.error(err.response.data.message);
-        } else {
-          message = String(err);
-          console.error(message);
-        }
-      }
-    };
-    fetchPosts();
 
     async function fetchBabyFoods() {
       try {
