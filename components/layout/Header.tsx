@@ -11,7 +11,7 @@ import { useAuthContext } from "context/AuthContext";
 
 const Header = () => {
   const { currentUser, loading, logout } = useAuthContext();
-  const userPhotoUrl = currentUser?.photoURL;
+  const userPhotoUrl = currentUser?.photoURL;// FirebaseのAuthenticationでGoogleログインを実装すると、photoURLプロパティが使用できる
   const [hamburgerMenuIsOpen, setHamburgerMenuOpen] = useState<boolean>(false);
 
   const handleMenuToggle = () => {
